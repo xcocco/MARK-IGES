@@ -1,63 +1,40 @@
 # Documento di Comprensione del Sistema MARK-Tool
 
-## Riassunto Esecutivo
+## Introduzione
+Il tool MARK è uno strumento di analisi statica sviluppato con l’obiettivo di classificare automaticamente i progetti di machine learning in due categorie principali: ML Consumer e ML Producer. Tale classificazione consente di determinare il ruolo funzionale di ciascun progetto nell'ambito del machine learning, supportando gli sviluppatori e gli analisti nella comprensione delle finalità, delle dipendenze e del livello di contributo del progetto stesso.
 
-MARK (Machine learning Automated Rule-based Classification Kit) è un sistema intelligente progettato per analizzare e classificare automaticamente progetti di machine learning. Il sistema distingue tra progetti che creano modelli ML (Produttori) e progetti che utilizzano modelli ML esistenti (Consumatori), fornendo preziose informazioni sull'ecosistema software ML.
+## Obiettivi del Sistema
+- **Supporto alla comprensione del ruolo progettuale**: Consentire a sviluppatori e analisti di individuare la funzione svolta da un progetto all’interno dell’ecosistema ML.
+- **Classificazione automatica**: Fornire un meccanismo di classificazione automatico in grado di distinguere i progetti di machine learning nelle due categorie principali: ML Consumer e ML Producer.
+- **Analisi statica**: Esaminare il codice sorgente e le sue dipendenze per determinare la categoria del progetto.
+- **Standardizzazione della classificazione**: Offrire criteri oggettivi e ripetibili per la categorizzazione dei progetti in modo consistente.
 
-## Scopo del Sistema e Proposta di Valore
+## Funzionalità Principali
+- **Gestione delle fonti dei progetti**:
+    - Possibilità di selezionare uno o più progetti locali da analizzare, indicando una cartella contenente i sorgenti.
 
-### Obiettivi Primari
-- **Classificazione Automatica dei Progetti**: Eliminare lo sforzo manuale nella categorizzazione di grandi collezioni di progetti ML
-- **Comprensione dell'Ecosistema**: Fornire informazioni su come il machine learning viene implementato attraverso diversi progetti
-- **Supporto alla Ricerca**: Abilitare studi su larga scala dei modelli di adozione ML e uso dei framework
-- **Intelligenza del Codice**: Aiutare le organizzazioni a comprendere la composizione del loro codebase ML
+    - Possibilità di clonare automaticamente uno o più repository da GitHub, integrando così progetti remoti nell’analisi.
 
-### Punti di Forza
-- **Risparmio di Tempo**: Automatizzare processi che altrimenti richiederebbero revisioni manuali del codice
-- **Scalabilità**: Analizzare centinaia o migliaia di progetti in modo consistente
-- **Supporto alle Decisioni**: Informare scelte tecnologiche e strategie di migrazione
-- **Garanzia di Qualità**: Identificare modelli di utilizzo ML e potenziali problemi
+    - Definizione di una cartella di input che funge da contenitore dei progetti (sia locali che clonati da remoto).
+
+- **Definizione della cartella di output**: MARK consente di specificare una cartella di output dedicata, dove vengono salvati i risultati dell’analisi statica prodotti in formato strutturato.
+
+- **Analisi statica basata su regole**:
+    - Il tool effettua un’ispezione statica del codice sorgente, che utilizza una knowledge base, contenente regole e pattern per il riconoscimento delle principali API e librerie di Machine Learning.
+    
+    - Rileva e classifica l’utilizzo di API ML (ad es. TensorFlow, Keras, ecc.), distinguendo tra progetti che utilizzano modelli esistenti (ML Consumers) e quelli che invece producono modelli propri (ML Producers).
+
+- **Classificazione automatica dei progetti ML**: in base alle API individuate e alle regole della knowledge base, MARK classifica automaticamente ogni progetto nella categoria appropriata. L'output fornisce anche dettagli su ciò che ha individuato durante l'analisi che ha permesso la classificazione.
+
+- **Interfaccia Grafica**: MARK mette a disposizione un'interfaccia grafica che semplifica l’utilizzo dello strumento: tramite un’interfaccia intuitiva l’utente può facilmente selezionare la cartella di input e di output, oltre a clonare repository da GitHub senza dover ricorrere a comandi manuali. Inoltre il tool consente di ispezionare l'output prodotto dall'analisi direttamente dall'interfaccia grafica.
 
 ## Panoramica del Sistema
 
-### Concetto Fondamentale
-MARK opera sul principio che diversi tipi di attività ML lasciano "impronte digitali" distinte nel codice sorgente. Analizzando questi modelli sistematicamente, il sistema può classificare automaticamente i progetti senza intervento umano.
+MARK è una desktop app dotata di interfaccia grafica che opera sul principio che diversi tipi di attività ML lasciano "impronte digitali" distinte nel codice sorgente. Analizzando questi modelli sistematicamente, il sistema può classificare automaticamente i progetti senza intervento umano.
 
-### Categorie di Classificazione
+### Architettura del Sistema
 
-#### Produttori di Modelli ML
-**Definizione**: Progetti focalizzati sulla creazione, addestramento e sviluppo di modelli di machine learning
-**Caratteristiche**:
-- Algoritmi di addestramento e ottimizzazione dei modelli
-- Preprocessamento dei dati per lo sviluppo dei modelli
-- Definizione dell'architettura dei modelli
-- Tuning delle prestazioni e sperimentazione
-- Implementazioni personalizzate di modelli
-
-**Esempi**:
-- Progetti di ricerca che sviluppano nuovi algoritmi
-- Aziende che costruiscono modelli proprietari
-- Implementazioni ML educative
-- Progetti di sviluppo di framework
-
-#### Consumatori di Modelli ML
-**Definizione**: Progetti che utilizzano modelli di machine learning pre-esistenti
-**Caratteristiche**:
-- Caricamento e utilizzo di modelli pre-addestrati
-- Operazioni di inferenza e predizione
-- Integrazione di capacità ML nelle applicazioni
-- Deployment e servizio dei modelli
-- Applicazioni ML per l'utente finale
-
-**Esempi**:
-- Applicazioni web con funzionalità ML
-- App mobile che utilizzano API ML
-- Strumenti di business intelligence
-- Sistemi di decisione automatizzata
-
-## Architettura del Sistema
-
-### Componenti di Alto Livello
+#### Componenti di Alto Livello
 
 ```
 ┌──────────────────┐    ┌─────────────────┐    ┌─────────────────┐
@@ -88,6 +65,15 @@ MARK opera sul principio che diversi tipi di attività ML lasciano "impronte dig
 - **Report Dettagliati**: Spiegazioni basate su evidenze
 - **Riassunti Statistici**: Insights aggregati attraverso i progetti
 - **Dati Esportabili**: Formati CSV per ulteriori analisi
+
+### Interfaccia Grafica Utente (GUI)
+La schermata principale è composta da due sezioni organizzate in tabs:
+**input** e **output**.
+- Sezione **input**: presenta tre campi di testo per l'inserimento del path della cartella di input, output e di un file contenente gli URL delle repository GitHub da clonare.
+Per ogni campo di testo è presente un pulsante **browse** che permette di selezionare il path tramite una finestra di navigazione grafica di directory del sistema.
+Infine il pulsante **Start Analysis** consente di avviare l'analisi.
+- Sezione **output**: questa sezione è divisa a sua volta in altre due sezioni: **Consumer** e **Producer**, in cui vengono mostrati i file generati dell'analisi.
+Cliccando su uno di questi file si apre una finestra in cui vengono mostrate informazioni come *keywords*, *nome del file* e *classe*, organizzate in una tabella.
 
 ## Flusso di Lavoro del Sistema
 
