@@ -49,7 +49,76 @@ Per quanto riguarda le regole di classificazione (Rules 3 e 4), queste sono stat
 
 ## 2. Architettura Completa e Interazioni
 
-### 2.1 Grafo delle Dipendenze
+### 2.1 Struttura del progetto
+Il processo di reverse engineering del software ha consentito di identificare diverse 
+directory presenti all’interno del progetto. 
+Tra queste, la directory di principale interesse è “MARK-Tool”, 
+la quale contiene il codice sorgente, scritto in Python, del tool oggetto di analisi. 
+Le restanti directory non risultano strettamente necessarie alla comprensione del 
+funzionamento del software, in quanto non includono porzioni di 
+codice ma prevalentemente file in formato CSV, che costituiscono 
+la Knowledge Base del sistema. 
+Per questo motivo, tali directory non verranno descritte in maniera approfondita nel presente documento.
+
+#### Struttura generale
+```
+📁 .
+├─ 📁 Dataset
+├─ 📁 ExecutionOverview
+├─ 🗎 LICENSE.md
+├─ 📁 Libraries_API_Methods
+├─ 📁 MARK-Configuration Study
+├─ 📁 MARK-Tool
+├─ 📁 ML Projects
+├─ 🗎 README.MD
+└─ 🗎 README.MD.docx
+```
+Di seguito vengono riportate sinteticamente le directory non centrali 
+all’analisi, in quanto prive di codice sorgente:
+- Dataset: presenta i dataset utilizzati per lo studio.
+- ExecutionOverview: contiene documenti riguardo l'esecuzione e la Knowledge Base del tool.
+- Libraries_API_Methods: contiene metodi e librerie utilizzati per la classificazione organizzati in files CSV .
+- MARK-Configuration Study: presenta le configurazioni e i risultati di "Taxonomy-Ablation Study" del tool.
+- ML Projects: contiene progetti ML e relative informazioni organizzati in file CSV.
+
+#### Struttura del codice sorgente
+Come precedentemente specificato, il codice sorgente del tool si trova
+nella directory "MARK-Tool" la cui struttura interna è descritta
+nell'albero sottostante:
+```
+📁 MARK-Tool
+├─ 📁 MARK-Tool
+│  ├─ 📁 Categorizer
+│  ├─ 📁 Functional_Test
+│  ├─ 🗎 LICENSE
+│  ├─ 🗎 README.md
+│  ├─ 🗎 __init__.py
+│  └─ 📁 cloner
+└─ 🗎 __init__.py
+```
+
+- **Categorizer**: Contiene la maggior parte del codice per l'analisi statica dei progetti. Strutturato come segue: 
+```
+📁 Categorizer
+├─ 🗎 __init__.py
+├─ 📁 oracle
+├─ 📁 results
+└─ 📁 src
+   ├─ 📁 Consumers
+   ├─ 📁 GUI
+   ├─ 📁 Producers
+   ├─ 🗎 __init__.py
+   ├─ 🗎 analyzer_base.py
+   ├─ 📁 components
+   ├─ 🗎 consumer_classifier_by_dict.py
+   ├─ 🗎 exec_analysis.py
+   ├─ 📁 library_dictionary
+   └─ 🗎 producer_classifier_by_dict.py
+```
+- **Functional_Test**: Contiene codice di test.
+- **cloner**: Componenti per la clonazione di repository da GitHub.
+
+### 2.2 Grafo delle Dipendenze
 
 ```mermaid
 graph TD
@@ -76,7 +145,7 @@ graph TD
     M[Test Funzionali] --> A
 ```
 
-### 2.2 Flusso di Dati e Controllo
+### 2.3 Flusso di Dati e Controllo
 
 #### Fase di Inizializzazione
 Durante la fase iniziale, il sistema compie alcune operazioni fondamentali:
@@ -96,7 +165,7 @@ Durante la fase iniziale, il sistema compie alcune operazioni fondamentali:
 3. **Rule Application**: Applicazione delle regole configurabili
 4. **Result Generation**: Creazione CSV di output strutturati
 
-### 2.3 Gestione dello Stato e Persistenza
+### 2.4 Gestione dello Stato e Persistenza
 
 Lo stato del sistema viene mantenuto attraverso diversi meccanismi complementari:
 - **File CSV**: Risultati persistenti e knowledge base
