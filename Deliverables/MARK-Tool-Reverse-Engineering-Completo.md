@@ -118,6 +118,17 @@ nell'albero sottostante:
 - **Functional_Test**: Contiene codice di test.
 - **cloner**: Componenti per la clonazione di repository da GitHub.
 
+#### Moduli principali
+| Nome modulo                        | Descrizione                                                                                                                                                                                                                                                               | Path nel progetto                                               |
+|------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------|
+| **exec_analysis.py**               | Punto di Ingresso Principale.<br>Orchestra l'intera pipeline di analisi.<br>Gestisce gli argomenti da riga di comando.<br>Coordina le fasi di analisi dei produttori e consumatori.<br>Gestisce la conversione dei notebook e la risoluzione dei percorsi.                | MARK-Tool/MARK-Tool/Categorizer/src/                            |
+| **analyzer_base.py**               | Classe Base Astratta.<br>Definisce le funzionalità comuni per entrambi gli analizzatori.<br>Gestisce le operazioni sui file e la gestione CSV.<br>Fornisce metodi di utilità per la costruzione di pattern regex.<br>Gestisce l'inizializzazione delle cartelle di output | MARK-Tool/MARK-Tool/Categorizer/src/                            |
+| **producer_classifier_by_dict.py** | Analisi Produttori.<br>Implementa la logica di rilevamento per i produttori ML.<br>Cerca pattern API relativi all'addestramento.<br>Utilizza la base di conoscenza specifica per i produttori.<br>Genera i risultati di classificazione per i produttori.                 | MARK-Tool/MARK-Tool/Categorizer/src/                            |
+| **consumer_classifier_by_dict.py** | Analisi Consumatori.<br>Implementa la logica di rilevamento per i consumatori ML.<br>Cerca pattern API relativi all'inferenza.<br>Implementa regole di rilevamento configurabili (Regole 3 e 4).<br>Utilizza la base di conoscenza specifica per i consumatori.           | MARK-Tool/MARK-Tool/Categorizer/src/                            |
+| **library_extractor.py**           | Nucleo dell'Analisi Statica.<br>Estrae le dichiarazioni import dai file Python.<br>Confronta le librerie importate con la base di conoscenza.<br>Gestisce diversi formati di codifica.<br>Fornisce analisi dell'utilizzo delle librerie                                   | MARK-Tool/MARK-Tool/Categorizer/src/components/static_analysis/ |
+| **gui_analysis.py**                | Punto d'ingresso per eseguire il tool con interfaccia grafica. Utilizza il modulo **exec_analysis.py** per avviare l'analisi statica dei progetti.                                                                                                                        | MARK-Tool/MARK-Tool/Categorizer/src/GUI/                        |
+
+
 ### 2.2 Grafo delle Dipendenze
 
 ```mermaid
