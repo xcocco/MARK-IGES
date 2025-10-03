@@ -255,6 +255,13 @@ class MLAnalyzerBase(ABC):
         self.results_file = os.path.join(self.output_folder, results_filename)
 ```
 
+Fornisce un'interfaccia astratta da implementare nelle sottoclassi:
+
+```python
+    @abstractmethod
+        def check_training_method(self, file: str, library_dict_path: str):
+```
+
 #### Metodi di Utility Condivisi
 
 **Costruzione Pattern Regex**:
