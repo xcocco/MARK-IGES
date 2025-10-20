@@ -59,6 +59,15 @@ class ExecAnalyzer:
             rules_4=True
         )
 
+    # Metodo per API web
+    def run_async(self):
+        """Esegue l’analisi in un thread in background"""
+        import threading
+        thread = threading.Thread(target=self.run)
+        thread.daemon = True
+        thread.start()
+        return thread
+
 
 if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
