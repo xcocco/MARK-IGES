@@ -37,11 +37,12 @@ def create_app(config_name=None):
     setup_logging(app)
     
     # Enable CORS
-    CORS(app, resources={
-        r"/api/*": {
-            "origins": app.config['CORS_ORIGINS']
-        }
-    })
+    #CORS(app, resources={
+    #    r"/api/*": {
+    #        "origins": app.config['CORS_ORIGINS']
+    #    }
+    #})
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
     
     # Initialize services
     file_service = FileService(
@@ -190,7 +191,8 @@ def main():
     app = create_app(env)
     
     # Get host and port from environment
-    host = os.environ.get('FLASK_HOST', '127.0.0.1')
+    #host = os.environ.get('FLASK_HOST', '127.0.0.1')
+    host = os.environ.get('FLASK_HOST', '0.0.0.0')
     port = int(os.environ.get('FLASK_PORT', 5000))
     
     # Run the app
