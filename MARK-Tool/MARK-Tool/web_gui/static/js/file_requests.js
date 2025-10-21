@@ -28,7 +28,7 @@ async function requestUpload(csvFile) {
     return handleResponse(response);
 }
 
-async function requestValidateInputFolder(path) {
+export async function requestValidateInputFolder(path) {
     const ENDPOINT = FULL_BASE_URL + "/validate/input";
     const response = await fetch(ENDPOINT, {
         method: "POST",
@@ -38,7 +38,7 @@ async function requestValidateInputFolder(path) {
     return handleResponse(response);
 }
 
-async function requestValidateOutputFolder(path) {
+export async function requestValidateOutputFolder(path) {
     const ENDPOINT = FULL_BASE_URL + "/validate/output";
     const response = await fetch(ENDPOINT, {
         method: "POST",
@@ -48,7 +48,7 @@ async function requestValidateOutputFolder(path) {
     return handleResponse(response);
 }
 
-async function requestValidateCSV(filePath) {
+export async function requestValidateCSV(filePath) {
     const ENDPOINT = FULL_BASE_URL + "/validate/csv";
     const response = await fetch(ENDPOINT, {
         method: "POST",
