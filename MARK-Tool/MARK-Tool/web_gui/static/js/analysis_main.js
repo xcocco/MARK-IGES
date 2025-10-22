@@ -6,7 +6,6 @@ window.addEventListener("load", function () {
     // Add the listener to the start_analysis_button
     const start_analysis_button = document.getElementById("start_analysis_btn")
     start_analysis_button.addEventListener("click", startAnalysisButtonClick)
-    LoadingDialog.showLoadingPopup()
 })
 
 async function startAnalysisButtonClick() {
@@ -37,15 +36,21 @@ async function startAnalysisButtonClick() {
 }
 
 async function pollJobStatus(jobId) {
+    let status
     try {
-        let status = await AnalysisRequests.requestStatus(jobId)
+        status = await AnalysisRequests.requestStatus(jobId)
         if (status.job.status === 'completed') {
-            LoadingDialog.hideLoadingPopup()
+            LoadingDialog.setContentText(status.job.message)
+            setTimeout(LoadingDialog.hideLoadingPopup, 1000)
             return
         }
-        setTimeout(() => pollJobStatus(jobId), 250)
+        LoadingDialog.setContentText(status.job.message)
+        setTimeout(() => pollJobStatus(jobId), 100)
     } catch (e) {
-        console.log(e.message)
+        LoadingDialog.hideLoadingSpinner()
+        LoadingDialog.setContentText(status.job.message)
+        LoadingDialog.showTopBar()
+
     }
 }
 
