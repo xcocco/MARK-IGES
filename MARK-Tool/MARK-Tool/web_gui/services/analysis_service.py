@@ -200,8 +200,9 @@ class AnalysisService:
             cmd = [
                 sys.executable,
                 self.cloner_path,
-                '--csv', github_csv,
-                '--output', input_path
+                '--input', github_csv,
+                '--output', input_path,
+                '--no_repos2'
             ]
             
             # Run the cloner
