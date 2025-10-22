@@ -1,16 +1,17 @@
 import * as AnalysisRequests from './analysis_requests.js';
 import * as FileRequests from './file_requests.js';
+import * as LoadingDialog from './loading-dialog-script.js';
 
 window.addEventListener("load", function () {
     // Add the listener to the start_analysis_button
     const start_analysis_button = document.getElementById("start_analysis_btn")
     start_analysis_button.addEventListener("click", startAnalysisButtonClick)
+    LoadingDialog.showLoadingPopup()
 })
 
 async function startAnalysisButtonClick() {
     const start_analysis_button = document.getElementById("start_analysis_btn")
     start_analysis_button.disabled = true
-    document.body.style.cursor = "wait"
 
     let input_field = document.getElementById("input_field");
     let output_field = document.getElementById("output_field");
@@ -22,11 +23,11 @@ async function startAnalysisButtonClick() {
 
     try {
         await validateInputFields(input_field, output_field, repo_field)
+        LoadingDialog.showLoadingPopup()
         await startAnalysis(input_field, output_field, repo_field)
     } catch (e) {
         window.alert(e)
     } finally {
-        document.body.style.cursor = "default"
         start_analysis_button.disabled = false
         input_field.disabled = false
         output_field.disabled = false

@@ -5,9 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" type="text/css" href="../static/css/style.css" />
         <link rel="stylesheet" type="text/css" href="../static/css/tabs.css" />
+        <link rel="stylesheet" type="text/css" href="../static/css/loading-popup-style.css" />
         <script type="module" src="../static/js/analysis_main.js"></script>
         <script type="module" src="../static/js/file_requests.js"></script>
         <script type="module" src="../static/js/analysis_requests.js"></script>
+        <script type="module" src="../static/js/loading-dialog-script.js"></script>
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 const tabs = document.querySelectorAll(".tab");
@@ -122,5 +124,21 @@
                 </div>
             </div>
         </div>
+        <template id="loading-popup-template">
+            <div id="loading-popup-container">
+                <div class="loading-popup">
+                    <div id="loading-popup-top-bar">
+                        <div id="loading-popup-top-bar-close-button">
+                            <div id="cross-1" class="close-button-cross"></div>
+                            <div id="cross-2" class="close-button-cross"></div>
+                        </div>
+                    </div>
+                    <div id="loading-content">
+                        <div class="spinner" id="loading-spinner"></div>
+                        <p id="loading-content-text">Loading...</p>
+                    </div>
+                </div>
+            </div>
+        </template>
     </body>
 </html>
