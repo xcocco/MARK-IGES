@@ -24,7 +24,8 @@ async function startAnalysisButtonClick() {
     try {
         await validateInputFields(input_field, output_field, repo_field)
         LoadingDialog.showLoadingPopup()
-        await startAnalysis(input_field, output_field, repo_field)
+        let jobId = await startAnalysis(input_field, output_field, repo_field)
+        await pollJobStatus(jobId)
     } catch (e) {
         window.alert(e)
     } finally {
@@ -32,6 +33,19 @@ async function startAnalysisButtonClick() {
         input_field.disabled = false
         output_field.disabled = false
         repo_field.disabled = false
+    }
+}
+
+async function pollJobStatus(jobId) {
+    try {
+        let status = await AnalysisRequests.requestStatus(jobId)
+        if (status.job.status === 'completed') {
+            LoadingDialog.hideLoadingPopup()
+            return
+        }
+        setTimeout(() => pollJobStatus(jobId), 250)
+    } catch (e) {
+        console.log(e.message)
     }
 }
 
@@ -59,4 +73,6 @@ async function startAnalysis(
         repo_field.value
     )
     console.log(jsonResp)
+
+    return jsonResp.job_id
 }

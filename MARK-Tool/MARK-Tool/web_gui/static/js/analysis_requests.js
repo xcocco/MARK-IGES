@@ -112,7 +112,7 @@ export async function requestStart(
     return handleResponse(response);
 }
 
-async function requestStatus(jobId) {
+export async function requestStatus(jobId) {
     const apiPath = `${API_URL}/status/${jobId}`
 
     const response = await fetch(
