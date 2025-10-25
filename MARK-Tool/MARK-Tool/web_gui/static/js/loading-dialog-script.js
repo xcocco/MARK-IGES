@@ -5,9 +5,6 @@ export function showLoadingPopup() {
 
     const actionButton = document.getElementById('loading-popup-action-btn');
     actionButton.style.display = 'none';
-    actionButton.addEventListener('click', (e) => {
-        hideLoadingPopup()
-    })
 }
 
 export function hideLoadingPopup() {
@@ -18,6 +15,12 @@ export function hideLoadingPopup() {
 export function addCustomAction(customLogic) {
     const actionButton = document.getElementById('loading-popup-action-btn');
     actionButton.addEventListener('click', customLogic)
+}
+
+export function removeAllCustomActions(customLogic) {
+    let old_element = document.getElementById("loading-popup-action-btn");
+    let new_element = old_element.cloneNode(true);
+    old_element.parentNode.replaceChild(new_element, old_element);
 }
 
 export function showActionButton() {

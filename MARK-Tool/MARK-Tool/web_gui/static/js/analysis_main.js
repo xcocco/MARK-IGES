@@ -53,16 +53,19 @@ async function pollJobStatus(jobId) {
         LoadingDialog.hideLoadingSpinner()
         LoadingDialog.setContentText(status.job.message)
         LoadingDialog.showActionButton()
+        LoadingDialog.addCustomAction(LoadingDialog.hideLoadingPopup)
     }
 }
 
-async function getResults(output_field) {
-    let output_path = output_field.value
+async function getResults() {
+    let output_path = document.getElementById('output_field').value
     LoadingDialog.hideActionButton()
+    LoadingDialog.removeAllCustomActions()
     LoadingDialog.setContentText("Retrieving analysis results")
     try {
         let resultsList = await ResultsRequests.requestList(output_path)
-        if (resultsList.success === 'true') {
+        console.log(resultsList)
+        if (resultsList.success === true) {
             LoadingDialog.hideLoadingPopup()
             document.getElementById('output-tab').click()
         } else {
@@ -70,7 +73,7 @@ async function getResults(output_field) {
         }
     } catch (e) {
         LoadingDialog.setContentText("Couldn't retrieve results")
-        LoadingDialog.showActionButton()
+        LoadingDialog.addCustomAction(LoadingDialog.hideLoadingPopup)
     }
 }
 
