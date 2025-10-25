@@ -2,13 +2,9 @@ export function showLoadingPopup() {
     const template = document.getElementById('loading-popup-template');
     let popup = template.content.cloneNode(true)
     document.body.appendChild(popup)
-    // obtain the actual document element after appending it
-    popup = document.getElementById('loading-popup-container')
 
-    const topBar = document.getElementById('loading-popup-top-bar');
-    topBar.style.display = 'none'
-    const popupCloseButton = document.getElementById('loading-popup-top-bar-close-button');
-    popupCloseButton.addEventListener('click', (e) => {
+    const actionButton = document.getElementById('loading-popup-action-btn');
+    actionButton.addEventListener('click', (e) => {
         hideLoadingPopup()
     })
 }
@@ -18,9 +14,14 @@ export function hideLoadingPopup() {
     if (popup) popup.remove();
 }
 
-export function showTopBar() {
-    const topBar = document.getElementById('loading-popup-top-bar');
-    topBar.style.display = 'inline-block';
+export function addCustomAction(customLogic) {
+    const actionButton = document.getElementById('loading-popup-action-btn');
+    actionButton.addEventListener('click', customLogic)
+}
+
+export function showActionButton(action) {
+    const button = document.getElementById('loading-popup-action-btn');
+    button.style.display = 'default';
 }
 
 export function setContentText(text) {
