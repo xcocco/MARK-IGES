@@ -4,6 +4,7 @@ export function showLoadingPopup() {
     document.body.appendChild(popup)
 
     const actionButton = document.getElementById('loading-popup-action-btn');
+    actionButton.style.display = 'none';
     actionButton.addEventListener('click', (e) => {
         hideLoadingPopup()
     })
