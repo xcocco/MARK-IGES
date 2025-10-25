@@ -44,7 +44,22 @@ async function pollJobStatus(jobId) {
             LoadingDialog.setContentText(status.job.message)
             LoadingDialog.hideLoadingSpinner()
             LoadingDialog.showActionButton()
-            LoadingDialog.addCustomAction(getResults)
+            LoadingDialog.addCustomAction(() => {
+                    getResults().then(results => {
+                    let table = document.getElementById("consumers-table")
+                    results.consumers.forEach(consumersRes => {
+                        const newRow = table.insertRow();
+                        const newCell = newRow.insertCell();
+                        newCell.textContent = consumersRes.filename;
+                    })
+                    table = document.getElementById("producers-table")
+                    results.producers.forEach(producersRes => {
+                        const newRow = table.insertRow();
+                        const newCell = newRow.insertCell();
+                        newCell.textContent = producersRes.filename;
+                    })
+                })
+            })
             return
         }
         LoadingDialog.setContentText(status.job.message)
@@ -68,6 +83,7 @@ async function getResults() {
         if (resultsList.success === true) {
             LoadingDialog.hideLoadingPopup()
             document.getElementById('output-tab').click()
+            return resultsList
         } else {
             throw new Error()
         }
