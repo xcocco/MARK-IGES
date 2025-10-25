@@ -52,11 +52,9 @@ def list_results():
             }), 404
         
         # List CSV files
-        all_files = file_service.list_csv_files(output_path)
-        
-        # Separate consumers and producers
-        consumers = [f for f in all_files if 'consumer' in f['filename'].lower()]
-        producers = [f for f in all_files if 'producer' in f['filename'].lower()]
+        consumers = file_service.list_csv_files(os.path.join(output_path, "Consumers", "Consumers_Final"))
+        producers = file_service.list_csv_files(os.path.join(output_path, "Producers", "Producers_Final"))
+        all_files = consumers + producers
         
         return jsonify({
             'success': True,
