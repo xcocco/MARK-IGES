@@ -20,9 +20,9 @@ export function addCustomAction(customLogic) {
     actionButton.addEventListener('click', customLogic)
 }
 
-export function showActionButton(action) {
+export function showActionButton() {
     const button = document.getElementById('loading-popup-action-btn');
-    button.style.display = 'default';
+    button.style.display = 'block';
 }
 
 export function setContentText(text) {
@@ -33,4 +33,9 @@ export function setContentText(text) {
 export function hideLoadingSpinner() {
     const spinner = document.getElementById('loading-spinner');
     spinner.style.display = 'none';
+}
+
+export function hideActionButton() {
+    const button = document.getElementById('loading-popup-action-btn');
+    button.style.display = 'none';
 }

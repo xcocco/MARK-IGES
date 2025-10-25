@@ -1,6 +1,7 @@
 import * as AnalysisRequests from './analysis_requests.js';
 import * as FileRequests from './file_requests.js';
 import * as LoadingDialog from './loading-dialog-script.js';
+import * as ResultsRequests from './results_requests.js'
 
 window.addEventListener("load", function () {
     // Add the listener to the start_analysis_button
@@ -41,7 +42,9 @@ async function pollJobStatus(jobId) {
         status = await AnalysisRequests.requestStatus(jobId)
         if (status.job.status === 'completed') {
             LoadingDialog.setContentText(status.job.message)
-            setTimeout(LoadingDialog.hideLoadingPopup, 1000)
+            LoadingDialog.hideLoadingSpinner()
+            LoadingDialog.showActionButton()
+            LoadingDialog.addCustomAction(getResults)
             return
         }
         LoadingDialog.setContentText(status.job.message)
@@ -49,8 +52,25 @@ async function pollJobStatus(jobId) {
     } catch (e) {
         LoadingDialog.hideLoadingSpinner()
         LoadingDialog.setContentText(status.job.message)
-        LoadingDialog.showTopBar()
+        LoadingDialog.showActionButton()
+    }
+}
 
+async function getResults(output_field) {
+    let output_path = output_field.value
+    LoadingDialog.hideActionButton()
+    LoadingDialog.setContentText("Retrieving analysis results")
+    try {
+        let resultsList = await ResultsRequests.requestList(output_path)
+        if (resultsList.success === 'true') {
+            LoadingDialog.hideLoadingPopup()
+            document.getElementById('output-tab').click()
+        } else {
+            throw new Error()
+        }
+    } catch (e) {
+        LoadingDialog.setContentText("Couldn't retrieve results")
+        LoadingDialog.showActionButton()
     }
 }
 

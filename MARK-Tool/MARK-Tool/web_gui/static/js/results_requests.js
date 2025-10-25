@@ -18,7 +18,7 @@ async function handleResponse(response) {
     return data
 }
 
-async function requestList(output_path) {
+export async function requestList(output_path) {
     const apiPath = `${API_URL}/list?`
 
     let queryParams = new URLSearchParams(
