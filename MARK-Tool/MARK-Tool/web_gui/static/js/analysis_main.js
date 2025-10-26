@@ -2,6 +2,7 @@ import * as AnalysisRequests from './analysis_requests.js';
 import * as FileRequests from './file_requests.js';
 import * as LoadingDialog from './loading-dialog-script.js';
 import * as ResultsRequests from './results_requests.js'
+import * as CSVFile from './csv_file.js'
 
 window.addEventListener("load", function () {
     // Add the listener to the start_analysis_button
@@ -49,14 +50,30 @@ async function pollJobStatus(jobId) {
                     let table = document.getElementById("consumers-table")
                     results.consumers.forEach(consumersRes => {
                         const newRow = table.insertRow();
+                        newRow.style.cursor = "pointer"
                         const newCell = newRow.insertCell();
                         newCell.textContent = consumersRes.filename;
+                        // aggiunge il path assoluto per richiedere dopo il file
+                        newCell.dataset.info = consumersRes.filepath
+                        newRow.addEventListener("click", () => {
+                            getCsvView(consumersRes.filepath).then((csv) => {
+                                CSVFile.createCsvTab(csv, consumersRes.filename)
+                            })
+                        })
                     })
                     table = document.getElementById("producers-table")
                     results.producers.forEach(producersRes => {
                         const newRow = table.insertRow();
+                        newRow.style.cursor = "pointer"
                         const newCell = newRow.insertCell();
                         newCell.textContent = producersRes.filename;
+                        // aggiunge il path assoluto per richiedere dopo il file
+                        newCell.dataset.info = producersRes.filepath
+                        newRow.addEventListener("click", () => {
+                            getCsvView(producersRes.filepath).then(csv => {
+                                CSVFile.createCsvTab(csv, producersRes.filename)
+                            })
+                        })
                     })
                 })
             })
@@ -68,6 +85,24 @@ async function pollJobStatus(jobId) {
         LoadingDialog.hideLoadingSpinner()
         LoadingDialog.setContentText(status.job.message)
         LoadingDialog.showActionButton()
+        LoadingDialog.addCustomAction(LoadingDialog.hideLoadingPopup)
+    }
+}
+
+async function getCsvView(filepath) {
+    LoadingDialog.showLoadingPopup()
+    LoadingDialog.setContentText("Fetching CSV file...")
+    try {
+        let csvView = await ResultsRequests.requestView(filepath)
+        console.log(csvView)
+        if (csvView.success === true) {
+            LoadingDialog.hideLoadingPopup()
+            return csvView
+        } else {
+            throw new Error()
+        }
+    } catch (e) {
+        LoadingDialog.setContentText("Couldn't retrieve results")
         LoadingDialog.addCustomAction(LoadingDialog.hideLoadingPopup)
     }
 }

@@ -98,7 +98,7 @@ async function requestStats(output_path) {
     return handleResponse(response);
 }
 
-async function requestView(
+export async function requestView(
     filepath,
     limit = null,
     offset = null
