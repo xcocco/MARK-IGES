@@ -3,6 +3,7 @@ import * as FileRequests from './file_requests.js';
 import * as LoadingDialog from './loading-dialog-script.js';
 import * as ResultsRequests from './results_requests.js'
 import * as CSVFile from './csv_file.js'
+import * as Tabs from './tabs.js'
 
 window.addEventListener("load", function () {
     // Add the listener to the start_analysis_button
@@ -57,7 +58,8 @@ async function pollJobStatus(jobId) {
                         newCell.dataset.info = consumersRes.filepath
                         newRow.addEventListener("click", () => {
                             getCsvView(consumersRes.filepath).then((csv) => {
-                                CSVFile.createCsvTab(csv, consumersRes.filename)
+                                const csvTabContent = CSVFile.createCsvTabContent(csv, consumersRes.filename)
+                                Tabs.createNewTab(consumersRes.filename, csvTabContent)
                             })
                         })
                     })
@@ -71,7 +73,8 @@ async function pollJobStatus(jobId) {
                         newCell.dataset.info = producersRes.filepath
                         newRow.addEventListener("click", () => {
                             getCsvView(producersRes.filepath).then(csv => {
-                                CSVFile.createCsvTab(csv, producersRes.filename)
+                                const csvTabContent = CSVFile.createCsvTabContent(csv, producersRes.filename)
+                                Tabs.createNewTab(producersRes.filename, csvTabContent)
                             })
                         })
                     })

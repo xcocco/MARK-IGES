@@ -48,3 +48,7 @@
 .tab-window {
     flex: 1;
 }
+
+.tab-window-hidden {
+    display: none !important;
+}

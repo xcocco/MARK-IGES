@@ -11,48 +11,7 @@
         <script type="module" src="../static/js/analysis_requests.js"></script>
         <script type="module" src="../static/js/loading-dialog-script.js"></script>
         <script type="module" src="../static/js/csv_file.js"></script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                const tabs = document.querySelectorAll(".tab");
-                const inputForm = document.getElementById("input-form");
-                const tablesWrapper = document.getElementById("tables-wrapper");
-
-                function showTab(tabName) {
-                    if (tabName === "Input") {
-                        inputForm.style.display = "flex";
-                        tablesWrapper.style.display = "none";
-                    } else {
-                        inputForm.style.display = "none";
-                        tablesWrapper.style.display = "flex";
-                    }
-                    tabs.forEach(tab => tab.classList.remove("tab-active"));
-                    document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add("tab-active");
-                }
-
-                tabs.forEach(tab => {
-                    tab.addEventListener("click", function() {
-                        showTab(tab.textContent.trim());
-                    });
-                });
-
-                // Show Input tab by default
-                showTab("Input");
-
-                // File browse logic
-                document.querySelectorAll('.browse-btn').forEach(function(btn) {
-                    btn.addEventListener('click', function() {
-                        const inputId = btn.getAttribute('data-input');
-                        const fileInput = btn.nextElementSibling;
-                        fileInput.click();
-                        fileInput.onchange = function() {
-                            if (fileInput.files.length > 0) {
-                                document.getElementById(inputId).value = fileInput.files[0].path || fileInput.files[0].name;
-                            }
-                        };
-                    });
-                });
-            });
-        </script>
+        <script type="module" src="../static/js/tabs.js"></script>
     </head>
     <body>
         <div class="tabbed-pane">
@@ -65,7 +24,7 @@
                 </li>
             </ul>
             <div class="tab-window">
-                <form id="input-form">
+                <form id="input-form" data-tab="Input">
                     <div class="input-row">
                         <label for="input_field">Input Folder:</label>
                         <input name="input_field" type="text" id="input_field">
@@ -87,7 +46,7 @@
                     <button type="button" id="start_analysis_btn">Start Analysis</button>
                 </form>
 
-                <div id="tables-wrapper" class="tables-wrapper" style="display: none;">
+                <div data-tab="Output" id="tables-wrapper" class="tables-wrapper">
                     <fieldset class="titled-border">
                         <legend>Consumers</legend>
                         <div class="inner-border">

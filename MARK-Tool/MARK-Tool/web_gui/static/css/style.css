@@ -163,6 +163,7 @@ caption {
     height: 100%;
     border: solid black;
     box-sizing: border-box;
+    overflow: scroll;
 }
 
 .csv-file-table-wrapper > table {
