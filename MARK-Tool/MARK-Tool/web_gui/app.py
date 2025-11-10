@@ -4,7 +4,7 @@ MARK Analysis Tool - Flask Application Entry Point
 import os
 import sys
 import logging
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from flask_cors import CORS
 
 from .config import get_config
@@ -83,6 +83,12 @@ def create_app(config_name=None):
     # Register root endpoint
     @app.route('/')
     def index():
+        """Root endpoint - serve the web application"""
+        return render_template('index.html')
+    
+    # Register root endpoint
+    @app.route('/endpoints')
+    def endpoints():
         """Root endpoint - API information"""
         return jsonify({
             'service': 'MARK Analysis Tool API',
