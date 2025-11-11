@@ -74,7 +74,6 @@ Questo documento fornisce un’analisi di impatto completa per sostituire l’at
 #### Opzione A: Flask + HTML/CSS/JS Vanilla
 - **Backend**: Flask 
 - **Frontend**: HTML5, CSS3, JavaScript vanilla
-- **Stile**: Bootstrap 5
 - **Upload File**: Gestito da Flask
  
 
@@ -276,24 +275,23 @@ Impatto: MEDIO – sostituzione delle funzionalità core
 
 ### 3.4 Dipendenze principali
 
-Dipendenze minime suggerite: Flask (backend), Bootstrap/JS (frontend). La selezione e la versione delle librerie verranno confermate in fase di implementazione.
+Dipendenze minime suggerite: Flask (backend), JS (frontend). La selezione e la versione delle librerie verranno confermate in fase di implementazione.
 
 ---
 
 ## 4. Matrice di Parità delle Funzionalità
 
-| Funzionalità | Attuale (Tkinter) | Web | Note |
-|--------------|--------------------|-----|------|
-| Selezione cartella input | ✅ Dialog nativo | ✅ Input testo + validazione | Il file browser richiede accesso lato server |
-| Selezione cartella output | ✅ Dialog nativo | ✅ Input testo + validazione | Come sopra |
-| Upload CSV | ✅ Dialog file | ✅ Drag & drop | UX migliorata |
-| Avvio analisi | ✅ Click bottone | ✅ Invio AJAX | Non bloccante sul web |
-| Visualizza risultati | ✅ Treeview | ✅ Lista/Card | Capacità equivalente |
-| Viewer CSV | ✅ Tab | ✅ Pagina/Modal | Pattern UX diverso |
-| Multi tab CSV | ✅ Widget tab | ✅ Tab JS | Realizzabile |
-| Effetti hover | ✅ Eventi custom | ✅ CSS :hover | Più semplice sul web |
-| Accesso offline | ✅ Sì | ⚠️Sì, ma richiede server locale | Più complesso ma meno dipendente dal sistema |
-| Mobile | ❌ No | ✅ Responsive | Nuova capacità |
+| Funzionalità | Attuale (Tkinter) | Web                             | Note                                         |
+|--------------|-------------------|---------------------------------|----------------------------------------------|
+| Selezione cartella input | ✅ Dialog nativo   | ✅ Input testo + validazione     | Il file browser richiede accesso lato server |
+| Selezione cartella output | ✅ Dialog nativo   | ✅ Input testo + validazione     | Come sopra                                   |
+| Avvio analisi | ✅ Click bottone   | ✅ Invio AJAX                    | Non bloccante sul web                        |
+| Visualizza risultati | ✅ Lista           | ✅ Lista                         | Capacità equivalente                         |
+| Viewer CSV | ✅ Tab             | ✅ Tab                           | Capacità equivalente                         |
+| Multi tab CSV | ✅ Widget tab      | ✅ Tab JS                        | Realizzabile                                 |
+| Effetti hover | ✅ Eventi custom   | ✅ CSS :hover                    | Più semplice sul web                         |
+| Accesso offline | ✅ Sì              | ⚠️Sì, ma richiede server locale | Più complesso ma meno dipendente dal sistema |
+| Mobile | ❌ No              | ✅ Responsive                    | Nuova capacità                               |
 
 Parità complessiva: parità 100% raggiungibile + miglioramenti significativi
 
@@ -373,7 +371,7 @@ Deliverable: API funzionanti, testabili con Postman/curl
 3. Aggiungere barra di progresso e stato
 4. Costruire pagina elenco risultati
 5. Creare componente viewer CSV
-6. Applicare stile (Bootstrap/Tailwind)
+6. Ricreare fedelmente lo stile con CSS
 
 Deliverable: UI web funzionante
 
@@ -510,7 +508,6 @@ Sforzo totale: 2–4 settimane circa
 ### 11.2 Benefici
 
 Benefici immediati:
-- UI moderna e responsive
 - Migliore gestione errori e feedback
 - Possibile capacità multi–utente
 - Possibile accesso remoto
@@ -547,10 +544,8 @@ Stack: Flask + Bootstrap 5 + JS vanilla
 ### 12.2 Versione Avanzata – Settimane 2–3
 
 Feature aggiuntive:
-1. Upload drag & drop
-2. Multi tab CSV
-3. Download risultati
-4. Notifiche error
+1. Multi tab CSV
+2. Notifiche error
 
 ### 12.3 Pronta per Produzione – Settimana 4
 
