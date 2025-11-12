@@ -34,11 +34,6 @@ export async function requestList(output_path) {
         }
     );
 
-    // Check if response is OK
-    if (!response.ok) {
-        throw new Error(`Server error: ${response.status}`)
-    }
-
     return handleResponse(response);
 }
 
@@ -66,11 +61,6 @@ async function requestSearch(
         }
     );
 
-    // Check if response is OK
-    if (!response.ok) {
-        throw new Error(`Server error: ${response.status}`)
-    }
-
     return handleResponse(response);
 }
 
@@ -89,11 +79,6 @@ async function requestStats(output_path) {
             }
         }
     );
-
-    // Check if response is OK
-    if (!response.ok) {
-        throw new Error(`Server error: ${response.status}`)
-    }
 
     return handleResponse(response);
 }
@@ -119,11 +104,6 @@ export async function requestView(
             },
         }
     );
-
-    // Check if response is OK
-    if (!response.ok) {
-        throw new Error(`Server error: ${response.status}`)
-    }
 
     return handleResponse(response);
 }

@@ -30,11 +30,6 @@ async function requestCancel(jobId) {
         }
     );
 
-    // Check if response is OK
-    if (!response.ok) {
-        throw new Error(`Server error: ${response.status}`)
-    }
-
     return handleResponse(response);
 }
 
@@ -50,11 +45,6 @@ async function requestJobs() {
         }
     );
 
-    // Check if response is OK
-    if (!response.ok) {
-        throw new Error(`Server error: ${response.status}`);
-    }
-
     return handleResponse(response)
 }
 
@@ -69,11 +59,6 @@ async function requestLogs(jobId) {
             }
         }
     );
-
-    // Check if response is OK
-    if (!response.ok) {
-        throw new Error(`Server error: ${response.status}`);
-    }
 
     return handleResponse(response);
 }
@@ -104,11 +89,6 @@ export async function requestStart(
         }
     );
 
-    // Check if response is OK
-    if (!response.ok) {
-        throw new Error(`Server error: ${response.status}`);
-    }
-
     return handleResponse(response);
 }
 
@@ -123,11 +103,6 @@ export async function requestStatus(jobId) {
             }
         }
     );
-
-    // Check if response is OK
-    if (!response.ok) {
-        throw new Error(`Server error: ${response.status}`);
-    }
 
     return handleResponse(response);
 }
