@@ -7,9 +7,16 @@ import stat
 
 
 class BaseClonerTest(unittest.TestCase):
+    # Make this an abstract base - subclasses must override these
+    csv_input_file = None
+    temp_output_dir = None
 
     @classmethod
     def setUpClass(cls):
+        # Skip the base class - only run concrete test classes
+        if cls is BaseClonerTest:
+            raise unittest.SkipTest("BaseClonerTest is an abstract base class")
+        
         cls.csv_input_file = os.path.abspath(cls.csv_input_file)
         cls.temp_output_dir = os.path.abspath(cls.temp_output_dir)
 
