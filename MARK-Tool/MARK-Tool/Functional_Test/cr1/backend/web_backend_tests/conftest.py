@@ -9,6 +9,9 @@ from pathlib import Path
 
 import pytest
 
+# Importa il reporter Markdown
+from web_backend_tests.pytest_md_reporter import markdown_reporter
+
 # Add project root to Python path
 project_root = Path(__file__).parent.parent.parent.parent.parent
 sys.path.insert(0, str(project_root))

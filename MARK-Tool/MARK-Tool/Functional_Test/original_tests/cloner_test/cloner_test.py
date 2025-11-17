@@ -225,4 +225,16 @@ class TestClonerCase3(BaseClonerTest):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    # Importa il reporter Markdown
+    import sys
+    import os
+    sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+    from test_reporter import MarkdownTestRunner
+    
+    # Crea la suite di test
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromModule(sys.modules[__name__])
+    
+    # Esegui con il reporter Markdown
+    runner = MarkdownTestRunner(verbosity=2)
+    runner.run(suite)

@@ -37,6 +37,12 @@ def main():
     script_dir = Path(__file__).parent
     test_dir = script_dir / 'web_backend_tests'
     
+    # Pulisci i risultati temporanei precedenti
+    temp_results = script_dir / '.test_results_temp.json'
+    if temp_results.exists():
+        temp_results.unlink()
+        print("🗑️  Risultati precedenti rimossi\n")
+    
     # Change to test directory
     os.chdir(script_dir)
     
