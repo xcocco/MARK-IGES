@@ -1,0 +1,16 @@
+# Test Requirements for MARK-Tool Backend
+# Install with: pip install -r requirements-test.txt
+
+# Testing framework
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-timeout>=2.1.0
+pytest-mock>=3.11.1
+
+# Flask testing
+Flask>=2.3.0
+Flask-CORS>=4.0.0
+Werkzeug>=2.3.0
+
+# For fixtures and utilities
+requests>=2.31.0

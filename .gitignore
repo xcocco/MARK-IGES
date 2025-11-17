@@ -13,4 +13,7 @@ MARK-Tool/MARK-Tool/Functional_Test/exec_analysis_test/Test_input/
 
 RQs/
 
+*.cpython
 *.pyc
+
+*.json
