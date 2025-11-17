@@ -1,6 +1,6 @@
 import {jest} from '@jest/globals';
 
-import * as api from '../../static/js/analysis_requests.js'
+import * as api from '../../../web_gui/static/js/analysis_requests.js'
 
 const BASE = 'http://localhost:5000/api/analysis';
 
