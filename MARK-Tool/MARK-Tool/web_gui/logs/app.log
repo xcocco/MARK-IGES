@@ -3826,3 +3826,5 @@
 2025-11-17 16:00:22,478 - web_gui.app - INFO - MARK Analysis Tool API initialized (environment: testing)
 2025-11-17 16:00:22,478 - web_gui.app - INFO - MARK Analysis Tool API initialized (environment: testing)
 2025-11-17 16:00:22,478 - web_gui.app - INFO - MARK Analysis Tool API initialized (environment: testing)
+2025-11-17 19:47:41,134 - app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-11-17 19:47:42,274 - app - INFO - MARK Analysis Tool API initialized (environment: development)
