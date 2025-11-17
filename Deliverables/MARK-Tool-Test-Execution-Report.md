@@ -1,17 +1,21 @@
 # MARK-Tool - Report di Esecuzione Test
 
-**Progetto:** MARK-Tool 
-**Data Esecuzione:** 17 Novembre 2025  
-**Versione:** CR1 - Backend Testing  
-**Eseguito da:** Sistema di Test Automatizzato  
+**Progetto:** MARK-Tool
+<br>
+**Data Esecuzione:** 17 Novembre 2025
+<br>
+**Eseguito da:** De Pasquale Luca, De Pasquale Marco, Turco Luigi
+
+
+## Backend
 
 ---
 
-## 1. Sommario Esecutivo
+### 1. Sommario Esecutivo
 
 Questo documento presenta i risultati completi dell'esecuzione dei test per il progetto MARK-Tool, includendo sia i **test di regressione** sui componenti esistenti che i **test sui nuovi componenti** sviluppati.
 
-### 1.1 Risultati Complessivi
+#### 1.1 Risultati Complessivi
 
 | Categoria | Test Totali | Passati | Falliti | Saltati | Tasso di Successo |
 |-----------|-------------|---------|---------|---------|-------------------|
@@ -19,7 +23,7 @@ Questo documento presenta i risultati completi dell'esecuzione dei test per il p
 | **Test Nuovi Componenti** | 65 | 65 | 0 | 0 | 100% |
 | **TOTALE** | **79** | **79** | **0** | **0** | **100%** |
 
-### 1.2 Conclusioni
+#### 1.2 Conclusioni
 
 ✅ **Tutti i test sono stati superati con successo**
 
@@ -30,11 +34,11 @@ Questo documento presenta i risultati completi dell'esecuzione dei test per il p
 
 ---
 
-## 2. Test di Regressione
+### 2. Test di Regressione
 
 I test di regressione verificano che le funzionalità esistenti del sistema continuino a funzionare correttamente dopo le modifiche.
 
-### 2.1 Sommario Test di Regressione
+#### 2.1 Sommario Test di Regressione
 
 **Data Esecuzione:** 17/11/2025  
 **Durata Totale:** ~17 secondi  
@@ -46,7 +50,7 @@ I test di regressione verificano che le funzionalità esistenti del sistema cont
 - **Saltati:** 0 ⏭️
 - **Tasso di Successo:** 100%
 
-### 2.2 Test di Exec Analysis (EA_0 - EA_9)
+#### 2.2 Test di Exec Analysis (EA_0 - EA_9)
 
 Test funzionali per `exec_analysis.py` - analisi di progetti ML per identificare producer e consumer.
 
@@ -65,7 +69,7 @@ Test funzionali per `exec_analysis.py` - analisi di progetti ML per identificare
 
 **Totale Test Exec Analysis:** 10 test - 10 passati (100%)
 
-### 2.3 Test di Cloner (CL_0 - CL_3)
+#### 2.3 Test di Cloner (CL_0 - CL_3)
 
 Test funzionali per `cloner.py` - clonazione di repository GitHub da file CSV.
 
@@ -80,11 +84,11 @@ Test funzionali per `cloner.py` - clonazione di repository GitHub da file CSV.
 
 ---
 
-## 3. Test sui Nuovi Componenti (Backend API)
+### 3. Test sui Nuovi Componenti (Backend API)
 
 I test sui nuovi componenti verificano le funzionalità del nuovo backend API sviluppato per MARK-Tool.
 
-### 3.1 Sommario Test Nuovi Componenti
+#### 3.1 Sommario Test Nuovi Componenti
 
 **Data Esecuzione:** 17/11/2025  
 **Durata Totale:** ~3 secondi  
@@ -96,7 +100,7 @@ I test sui nuovi componenti verificano le funzionalità del nuovo backend API sv
 - **Saltati:** 0 ⏭️
 - **Tasso di Successo:** 100%
 
-### 3.2 Route di Analisi (TC-A01 - TC-A09)
+#### 3.2 Route di Analisi (TC-A01 - TC-A09)
 
 API endpoints per la gestione delle analisi ML.
 
@@ -119,7 +123,7 @@ API endpoints per la gestione delle analisi ML.
 
 **Totale Test Route di Analisi:** 14 test - 14 passati (100%)
 
-### 3.3 Route dei File (TC-F01 - TC-F11)
+#### 3.3 Route dei File (TC-F01 - TC-F11)
 
 API endpoints per la gestione dei file.
 
@@ -150,7 +154,7 @@ API endpoints per la gestione dei file.
 
 **Totale Test Route dei File:** 22 test - 22 passati (100%)
 
-### 3.4 Route dei Risultati (TC-R01 - TC-R12)
+#### 3.4 Route dei Risultati (TC-R01 - TC-R12)
 
 API endpoints per la visualizzazione e ricerca dei risultati.
 
@@ -178,7 +182,7 @@ API endpoints per la visualizzazione e ricerca dei risultati.
 
 **Totale Test Route dei Risultati:** 19 test - 19 passati (100%)
 
-### 3.5 Test di Integrazione (TC-INT-01 - TC-INT-10)
+#### 3.5 Test di Integrazione (TC-INT-01 - TC-INT-10)
 
 Test end-to-end che verificano i workflow completi.
 
@@ -199,9 +203,9 @@ Test end-to-end che verificano i workflow completi.
 
 ---
 
-## 4. Analisi della Copertura
+### 4. Analisi della Copertura
 
-### 4.1 Componenti Testati
+#### 4.1 Componenti Testati
 
 #### Test di Regressione
 - ✅ **exec_analysis.py** - Analisi progetti ML (10 test)
@@ -213,7 +217,7 @@ Test end-to-end che verificano i workflow completi.
 - ✅ **Results Routes** - Visualizzazione e ricerca risultati (19 test)
 - ✅ **Integration** - Workflow end-to-end (10 test)
 
-### 4.2 Tipologie di Test
+#### 4.2 Tipologie di Test
 
 | Tipologia | Numero Test | Percentuale |
 |-----------|-------------|-------------|
@@ -224,7 +228,105 @@ Test end-to-end che verificano i workflow completi.
 
 ---
 
-## 5. Problemi Rilevati
+#### 5. Problemi Rilevati
+
+**Nessun problema rilevato** - Tutti i test sono stati superati con successo.
+
+## Frontend
+
+---
+
+### 1. Sommario Esecutivo
+
+Questa sezione riporta i risultati dell'esecuzione dei test sul frontend per la CR1 del progetto MARK-Tool.
+
+#### 1.1 Risultati Complessivi
+
+| Categoria                | Test Totali | Passati | Falliti | Saltati | Tasso di Successo |
+|-------------------------|-------------|---------|---------|---------|-------------------|
+| **Frontend Unit/Integration** | 28          | 28      | 0       | 0       | 100%              |
+| **TOTALE**              | **28**      | **28**  | **0**   | **0**   | **100%**          |
+
+#### 1.2 Conclusioni
+
+✅ **Tutti i test frontend sono stati superati con successo**
+
+- Le funzionalità frontend CR1 sono conformi ai requisiti
+- Nessun errore o regressione rilevata
+- Sistema pronto per validazione manuale GUI
+
+---
+
+### 2. Dettaglio Test Eseguiti
+
+**Data Esecuzione:** 17/11/2025  
+**Durata Totale:** ~2.4 secondi  
+**Risultato:** ✅ **TUTTI I TEST PASSATI**
+
+- **Test Totali:** 28
+- **Passati:** 28 ✅
+- **Falliti:** 0 ❌
+- **Saltati:** 0 ⏭️
+- **Tasso di Successo:** 100%
+
+
+#### 2.1 Tabella Dettagliata Test Case
+
+| ID Test | Suite | Descrizione | Stato |
+|--------|-------|-------------|-------|
+| TC-FR-A01 | analysis_requests | Verifica chiamata endpoint status e parsing risposta | ✅ PASS |
+| TC-FR-A02 | analysis_requests | Gestione errore backend con messaggio | ✅ PASS |
+| TC-FR-A03 | analysis_requests | Gestione errore backend senza messaggio | ✅ PASS |
+| TC-FR-A04 | analysis_requests | Verifica POST start con header/body corretti | ✅ PASS |
+| TC-FR-A05 | analysis_requests | Verifica parametri opzionali github_csv e run_cloner | ✅ PASS |
+| TC-FR-A06 | analysis_requests | Gestione errore server in start | ✅ PASS |
+| TC-FR-A07 | analysis_requests | Gestione parsing JSON non valido (status) | ✅ PASS |
+| TC-FR-F01 | file_requests | Verifica POST validazione input folder e parsing | ✅ PASS |
+| TC-FR-F02 | file_requests | Gestione errore backend con messaggio (input folder) | ✅ PASS |
+| TC-FR-F03 | file_requests | Gestione errore backend senza messaggio (input folder) | ✅ PASS |
+| TC-FR-F04 | file_requests | Verifica POST validazione output folder e parsing | ✅ PASS |
+| TC-FR-F05 | file_requests | Gestione errore backend con messaggio (output folder) | ✅ PASS |
+| TC-FR-F06 | file_requests | Verifica POST validazione CSV e parsing | ✅ PASS |
+| TC-FR-R01 | results_requests | Verifica GET list con query params e parsing | ✅ PASS |
+| TC-FR-R02 | results_requests | Gestione errore backend con messaggio (list) | ✅ PASS |
+| TC-FR-R03 | results_requests | Gestione errore backend senza messaggio (list) | ✅ PASS |
+| TC-FR-R04 | results_requests | Gestione parsing JSON non valido (list) | ✅ PASS |
+| TC-FR-R05 | results_requests | Gestione errore server e parsing fallito (list) | ✅ PASS |
+| TC-FR-R06 | results_requests | Verifica GET view solo filepath e parsing | ✅ PASS |
+| TC-FR-R07 | results_requests | Verifica GET view con limit/offset e parsing | ✅ PASS |
+| TC-FR-R08 | results_requests | Gestione errore backend con messaggio (view) | ✅ PASS |
+| TC-FR-R09 | results_requests | Gestione errore backend senza messaggio (view) | ✅ PASS |
+| TC-FR-R10 | results_requests | Gestione parsing JSON non valido (view) | ✅ PASS |
+| TC-FR-R11 | results_requests | Gestione errore server e parsing fallito (view) | ✅ PASS |
+| TC-FR-R12 | results_requests | Gestione errore di rete (fetch rejects) | ✅ PASS |
+
+---
+
+#### 2.2 Test Manuali GUI
+
+Sono stati eseguiti i test manuali previsti dal test plan frontend (vedi MARK-Tool-CR1-Test-Plan.md, sezione "Test Interfaccia Utente").
+
+| ID Test | Descrizione | Stato |
+|---------|-------------|-------|
+| TC-GUI-M01 | Dialog di caricamento all'avvio dell'analisi | ✅ PASS |
+| TC-GUI-M02 | Completamento analisi e messaggio di notifica nel dialog | ✅ PASS |
+| TC-GUI-M03 | Chiusura dialog e navigazione automatica alla tab "Output" | ✅ PASS |
+| TC-GUI-M04 | Apertura tab CSV al click su elemento Consumers/Producers | ✅ PASS |
+| TC-GUI-M05 | Navigazione tra tab | ✅ PASS |
+| TC-GUI-M06 | Chiusura tab CSV con pulsante "x" | ✅ PASS |
+
+**Nota:** Tutti i test manuali sono stati superati con successo. Sono stati rilevati alcuni glitch minori nella UI durante il caricamento iniziale della schermata principale (ad esempio, brevi ritardi o flicker grafici), ma non sono considerati bug critici e non impattano la funzionalità. I test sono quindi considerati passati.
+
+### 3. Analisi della Copertura
+
+#### 3.1 Componenti Testati
+- **analysis_requests.js**: API analisi, polling, error handling
+- **file_requests.js**: Validazione input/output/CSV, error handling
+- **results_requests.js**: Listing risultati, visualizzazione CSV, errori di rete
+
+---
+
+### 4. Problemi Rilevati
 
 **Nessun problema rilevato** - Tutti i test sono stati superati con successo.
 
@@ -239,9 +341,12 @@ Test end-to-end che verificano i workflow completi.
 - **TC-FXX:** Test File Routes (Nuovi componenti)
 - **TC-RXX:** Test Results Routes (Nuovi componenti)
 - **TC-INT-XX:** Test di Integrazione (Nuovi componenti)
+- **TC-FR-AXX**: Test analysis_requests.js
+- **TC-FR-FXX**: Test file_requests.js
+- **TC-FR-RXX**: Test results_requests.js
+- **TC-GUI-MXX**: Test GUI
 
 ### Risultati
 - ✅ **PASS:** Test superato con successo
 - ❌ **FAIL:** Test fallito
 - ⏭️ **SKIP:** Test saltato
-
