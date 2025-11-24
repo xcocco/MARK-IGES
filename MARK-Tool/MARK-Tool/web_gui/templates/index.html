@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>MARK</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" type="text/css" href="../static/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="../static/css/tabs.css" />
+        <link rel="stylesheet" type="text/css" href="../static/css/loading-popup-style.css" />
+        <script type="module" src="../static/js/analysis_main.js"></script>
+        <script type="module" src="../static/js/file_requests.js"></script>
+        <script type="module" src="../static/js/analysis_requests.js"></script>
+        <script type="module" src="../static/js/loading-dialog-script.js"></script>
+        <script type="module" src="../static/js/csv_file.js"></script>
+        <script type="module" src="../static/js/tabs.js"></script>
+    </head>
+    <body>
+        <div class="tabbed-pane">
+            <ul class="tabs-container">
+                <li class="tab" data-tab="Input">
+                    Input
+                </li>
+                <li id='output-tab' class="tab" data-tab="Output">
+                    Output
+                </li>
+            </ul>
+            <div class="tab-window">
+                <form id="input-form" data-tab="Input">
+                    <div class="input-row">
+                        <label for="input_field">Input Folder:</label>
+                        <input name="input_field" type="text" id="input_field">
+                        <button type="button" class="browse-btn" data-input="input_field">Browse</button>
+                        <input type="file" webkitdirectory directory multiple id="input_file" style="display:none;">
+                    </div>
+                    <div class="input-row">
+                        <label for="output_field">Output Folder:</label>
+                        <input name="output_field" type="text" id="output_field">
+                        <button type="button" class="browse-btn" data-input="output_field">Browse</button>
+                        <input type="file" id="output_file" style="display:none;">
+                    </div>
+                    <div class="input-row">
+                        <label for="repo_field">GitHub Repo:</label>
+                        <input name="repo_field" type="text" id="repo_field">
+                        <button type="button" class="browse-btn" data-input="repo_field">Browse</button>
+                        <input type="file" id="repo_file" style="display:none;">
+                    </div>
+                    <button type="button" id="start_analysis_btn">Start Analysis</button>
+                </form>
+
+                <div data-tab="Output" id="tables-wrapper" class="tables-wrapper">
+                    <fieldset class="titled-border">
+                        <legend>Consumers</legend>
+                        <div class="inner-border">
+                            <table id="consumers-table">
+                                <caption>CSV File</caption>
+                            </table>
+                        </div>
+                    </fieldset>
+                    <fieldset class="titled-border">
+                        <legend>Producers</legend>
+                        <div class="inner-border">
+                            <table id="producers-table">
+                                <caption>CSV File</caption>
+                            </table>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <template id="loading-popup-template">
+            <div id="loading-popup-container">
+                <div class="loading-popup">
+                    <button id="loading-popup-action-btn">Ok</button>
+                    <div id="loading-content">
+                        <div class="spinner" id="loading-spinner"></div>
+                        <p id="loading-content-text">Loading...</p>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id ="csv-file-template">
+            <div class="csv-file-main">
+                <div class="csv-file-top-bar">
+			        <p>pino_file.csv</p>
+			        <button class="csv-close-button">X</button>
+		        </div>
+                <div class="csv-file-table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ProjectName</th>
+                                <th>Is ML consumer</th>
+                                <th>where</th>
+                                <th>keyword</th>
+                                <th>line_number</th>
+                                <th>libraries</th>
+                                <th>keywords</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+		        </div>
+            </div>
+        </template>
+    </body>
+</html>

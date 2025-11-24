@@ -59,8 +59,10 @@ class ProductionConfig(Config):
     # In production, SECRET_KEY must be set via environment variable
     SECRET_KEY = os.environ.get('SECRET_KEY')
     
-    if not SECRET_KEY:
-        raise ValueError("SECRET_KEY environment variable must be set in production")
+    def __init__(self):
+        super().__init__()
+        if not self.SECRET_KEY:
+            raise ValueError("SECRET_KEY environment variable must be set in production")
 
 
 class TestingConfig(Config):

@@ -1,5 +1,11 @@
 # Analisi di Impatto: Migrazione da GUI Desktop Python a GUI Web
 
+## Informazioni Documento
+
+**Versione**: 1.0  
+**Data**: 2025-10-13  
+**Autore**: De Pasquale Luca, De Pasquale Marco, Turco Luigi
+
 ## Descrizione Documento
 
 Questo documento fornisce un’analisi di impatto completa per sostituire l’attuale GUI desktop Python (basata su Tkinter/ttkbootstrap) con un’interfaccia web moderna per il MARK Analysis Tool.
@@ -561,9 +567,3 @@ La migrazione è da considerarsi riuscita quando:
 - [ ] L’interfaccia web è accessibile da browser moderni
 - [ ] L’esecuzione dell’analisi è identica al sistema attuale 
 - [ ] La documentazione è aggiornata
-
-## Informazioni Documento
-
-**Versione**: 1.0  
-**Data**: 2025-10-13  
-**Autore**: Turco Luigi

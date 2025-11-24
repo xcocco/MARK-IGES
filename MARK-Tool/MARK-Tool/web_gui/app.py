@@ -4,7 +4,7 @@ MARK Analysis Tool - Flask Application Entry Point
 import os
 import sys
 import logging
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from flask_cors import CORS
 
 from .config import get_config
@@ -37,11 +37,14 @@ def create_app(config_name=None):
     setup_logging(app)
     
     # Enable CORS
-    CORS(app, resources={
-        r"/api/*": {
-            "origins": app.config['CORS_ORIGINS']
-        }
-    })
+    # TODO originale, vedere se lasciare qualunque origine
+    #CORS(app, resources={
+    #    r"/api/*": {
+    #        "origins": app.config['CORS_ORIGINS']
+    #    }
+    #})
+    # Accetta qualunque origine su tutti i path /api
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
     
     # Initialize services
     file_service = FileService(
@@ -80,6 +83,12 @@ def create_app(config_name=None):
     # Register root endpoint
     @app.route('/')
     def index():
+        """Root endpoint - serve the web application"""
+        return render_template('index.html')
+    
+    # Register root endpoint
+    @app.route('/endpoints')
+    def endpoints():
         """Root endpoint - API information"""
         return jsonify({
             'service': 'MARK Analysis Tool API',
@@ -190,7 +199,9 @@ def main():
     app = create_app(env)
     
     # Get host and port from environment
-    host = os.environ.get('FLASK_HOST', '127.0.0.1')
+    # TODO vedere se lo si vuole lasciare accessibile da altri dispositivi o no
+    #host = os.environ.get('FLASK_HOST', '127.0.0.1')
+    host = os.environ.get('FLASK_HOST', '0.0.0.0')
     port = int(os.environ.get('FLASK_PORT', 5000))
     
     # Run the app
