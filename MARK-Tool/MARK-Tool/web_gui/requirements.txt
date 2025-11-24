@@ -1,0 +1,9 @@
+# Flask Backend Requirements
+# MARK Analysis Tool - Web GUI
+
+# Core Flask
+Flask==3.0.0
+Werkzeug==3.0.1
+
+# CORS support
+Flask-CORS==4.0.0

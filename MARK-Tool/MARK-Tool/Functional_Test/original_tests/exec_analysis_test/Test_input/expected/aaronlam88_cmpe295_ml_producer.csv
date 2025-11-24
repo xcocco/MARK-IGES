@@ -1,0 +1,22 @@
+ProjectName,Is ML producer,where,keyword,line_number,libraries,keywords
+repos2/aaronlam88,Yes,Test_input/input_2\repos2\aaronlam88\cmpe295\python\archive\DecisionTreeClassifier_multi_stock.py,,40,sklearn,.fit(
+repos2/aaronlam88,Yes,Test_input/input_2\repos2\aaronlam88\cmpe295\python\archive\demo-DecisionTreeClassifier-lg.py,,110,sklearn,.fit(
+repos2/aaronlam88,Yes,Test_input/input_2\repos2\aaronlam88\cmpe295\python\archive\demo-DecisionTreeClassifier-lg.py,,114,sklearn,.fit(
+repos2/aaronlam88,Yes,Test_input/input_2\repos2\aaronlam88\cmpe295\python\archive\demo-DecisionTreeClassifier-sm.py,,97,sklearn,.fit(
+repos2/aaronlam88,Yes,Test_input/input_2\repos2\aaronlam88\cmpe295\python\archive\demo-hello-sklearn.py,,5,sklearn,.fit(
+repos2/aaronlam88,Yes,Test_input/input_2\repos2\aaronlam88\cmpe295\python\archive\demo-MLPClassifier.py,,7,sklearn,.fit(
+repos2/aaronlam88,Yes,Test_input/input_2\repos2\aaronlam88\cmpe295\python\archive\demo-pandas.py,,114,sklearn,.fit(
+repos2/aaronlam88,Yes,Test_input/input_2\repos2\aaronlam88\cmpe295\python\archive\SGDClassifier_single_stock.py,,41,sklearn,.fit(
+repos2/aaronlam88,Yes,Test_input/input_2\repos2\aaronlam88\cmpe295\python\archive\SGDRegression_Prediction_For_Next_Week.py,,45,sklearn,.fit(
+repos2/aaronlam88,Yes,Test_input/input_2\repos2\aaronlam88\cmpe295\python\archive\SGDRegression_single_stock.py,,46,sklearn,.fit(
+repos2/aaronlam88,Yes,Test_input/input_2\repos2\aaronlam88\cmpe295\python\archive\SGDRegression_single_stock_today_for_tomorrow.py,,52,sklearn,.fit(
+repos2/aaronlam88,Yes,Test_input/input_2\repos2\aaronlam88\cmpe295\python\for_fun\prediction1.py,,59,sklearn,.fit(
+repos2/aaronlam88,Yes,Test_input/input_2\repos2\aaronlam88\cmpe295\python\models\Classifier.py,,78,sklearn,.fit(
+repos2/aaronlam88,Yes,Test_input/input_2\repos2\aaronlam88\cmpe295\python\models\DecisionTreeClassifier.py,,45,sklearn,.fit(
+repos2/aaronlam88,Yes,Test_input/input_2\repos2\aaronlam88\cmpe295\python\models\LassoRegression.py,,66,sklearn,.fit(
+repos2/aaronlam88,Yes,Test_input/input_2\repos2\aaronlam88\cmpe295\python\models\SGDClassifier.py,,44,sklearn,.fit(
+repos2/aaronlam88,Yes,Test_input/input_2\repos2\aaronlam88\cmpe295\python\models\SGDRegression.py,,60,sklearn,.fit(
+repos2/aaronlam88,Yes,Test_input/input_2\repos2\aaronlam88\cmpe295\python\models\SVMClassifier.py,,45,sklearn,.fit(
+repos2/aaronlam88,Yes,Test_input/input_2\repos2\aaronlam88\cmpe295\python\testing\hello-sklearn.py,,5,sklearn,.fit(
+repos2/aaronlam88,Yes,Test_input/input_2\repos2\aaronlam88\cmpe295\python\testing\pandas-test.py,,114,sklearn,.fit(
+repos2/aaronlam88,Yes,Test_input/input_2\repos2\aaronlam88\cmpe295\python\testing\stock-predict.py,,83,sklearn,.fit(
