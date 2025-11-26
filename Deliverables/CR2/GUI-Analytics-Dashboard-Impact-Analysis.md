@@ -35,7 +35,7 @@ Questo documento fornisce un’analisi di impatto per l’evoluzione della nuova
 - `routes/results_routes.py` – Endpoint visualizzazione risultati (lista CSV, viewer)
 - `services/analysis_service.py` – Ponte verso `exec_analysis.py`
 - `services/file_service.py` – Gestione upload/validazione
-- `templates/` – `base.html`, `index.html`, `results.html`, `csv-viewer.html`  
+- `templates/` – `index.html`  
 - `static/` – CSS/JS e risorse statiche
 
 ### 1.2 Funzionalità Attuali Rilevanti
@@ -379,46 +379,9 @@ Non pienamente compatibile (solo a livello visivo/UX):
 
 ---
 
-## 8. Strategia di Testing
+## 8. Requisiti di Risorse
 
-### 8.1 Unit Test
-
-Nuovi test suggeriti:
-
-```text
-# tests/web_gui/test_analytics_service.py
-- test_consumer_producer_counts_from_sample_csv()
-- test_percentages_sum_to_100()
-- test_top_keywords_limit()
-
-# tests/web_gui/test_analytics_routes.py
-- test_analytics_summary_endpoint()
-- test_consumer_producer_distribution_endpoint()
-- test_keywords_endpoint()
-```
-
-### 8.2 Test di Integrazione
-
-```text
-# tests/integration/test_web_analytics_flow.py
-- test_full_analytics_workflow()        # analisi + chiamata endpoint + verifica grafici lato frontend (parziale)
-```
-
-### 8.3 Checklist di Test Manuale
-
-- [ ] Eseguire un’analisi su un progetto di esempio.  
-- [ ] Verificare caricamento dashboard senza errori JS.  
-- [ ] Controllare che la somma `consumer + producer + altro` coincida col totale.  
-- [ ] Verificare che le percentuali nel pie chart siano coerenti con i conteggi.  
-- [ ] Verificare che le keywords mostrate siano effettivamente presenti nei risultati.  
-- [ ] Testare la dashboard su almeno 2 browser.  
-- [ ] (Se implementato) Verificare il funzionamento dei filtri tramite click sui grafici.
-
----
-
-## 9. Requisiti di Risorse
-
-### 9.1 Risorse Umane
+### 8.1 Risorse Umane
 
 | Ruolo | Sforzo | Attività |
 |-------|--------|----------|
@@ -428,7 +391,7 @@ Nuovi test suggeriti:
 
 Sforzo totale stimato: ~1–2 settimane (considerando che la base web esiste già).
 
-### 9.2 Requisiti Tecnici
+### 8.2 Requisiti Tecnici
 
 - Python 3.8+  
 - Flask (già presente da CR1)  
@@ -437,7 +400,7 @@ Sforzo totale stimato: ~1–2 settimane (considerando che la base web esiste gi�
 
 ---
 
-## 10. Criteri di Successo
+## 9. Criteri di Successo
 
 La change request è da considerarsi completata con successo quando:
 
