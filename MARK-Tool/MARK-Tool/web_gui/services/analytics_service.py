@@ -434,6 +434,6 @@ class AnalyticsService:
         has_producer = os.path.exists(producer_path) or self._find_csv_file(output_path, self.producer_csv) is not None
         
         if not has_consumer and not has_producer:
-            return False, "No consumer or producer CSV files found in output path or its subdirectories"
+            return False, f"No {self.consumer_csv} or {self.producer_csv} files found in output path or its subdirectories"
         
         return True, "Output path is valid"
