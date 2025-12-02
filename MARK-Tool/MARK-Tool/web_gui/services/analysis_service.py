@@ -380,3 +380,55 @@ class AnalysisService:
             for job_id in jobs_to_remove:
                 del self.jobs[job_id]
                 print(f"Removed old job: {job_id}")
+    
+    def get_last_completed_job(self) -> Optional[AnalysisJob]:
+        """
+        Get the most recently completed job
+        
+        Returns:
+            AnalysisJob or None if no completed jobs exist
+        """
+        with self.lock:
+            completed_jobs = [
+                job for job in self.jobs.values() 
+                if job.status == 'completed' and job.completed_at
+            ]
+            
+            if not completed_jobs:
+                return None
+            
+            # Sort by completion time (most recent first)
+            completed_jobs.sort(key=lambda j: j.completed_at, reverse=True)
+            
+            return completed_jobs[0]
+    
+    def get_output_path_for_job(self, job_id: str) -> Optional[str]:
+        """
+        Get the output path for a specific job
+        
+        Args:
+            job_id: Job ID
+            
+        Returns:
+            Output path or None if job not found
+        """
+        job = self.get_job(job_id)
+        
+        if job:
+            return job.output_path
+        
+        return None
+    
+    def get_last_analysis_output_path(self) -> Optional[str]:
+        """
+        Get the output path of the last completed analysis
+        
+        Returns:
+            Output path or None if no completed analysis exists
+        """
+        last_job = self.get_last_completed_job()
+        
+        if last_job:
+            return last_job.output_path
+        
+        return None
