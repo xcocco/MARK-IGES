@@ -3,9 +3,15 @@
     <head>
         <title>MARK</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- Bootstrap 5 CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Bootstrap Icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+        <!-- Custom Styles -->
         <link rel="stylesheet" type="text/css" href="../static/css/style.css" />
         <link rel="stylesheet" type="text/css" href="../static/css/tabs.css" />
         <link rel="stylesheet" type="text/css" href="../static/css/loading-popup-style.css" />
+        <link rel="stylesheet" type="text/css" href="../static/css/dashboard.css" />
         <script type="module" src="../static/js/analysis_main.js"></script>
         <script type="module" src="../static/js/file_requests.js"></script>
         <script type="module" src="../static/js/analysis_requests.js"></script>
@@ -14,6 +20,7 @@
         <script type="module" src="../static/js/tabs.js"></script>
     </head>
     <body>
+        <h1 class="text-center my-4">MARK Tool Analysis</h1>
         <div class="tabbed-pane">
             <ul class="tabs-container">
                 <li class="tab" data-tab="Input">
@@ -21,6 +28,9 @@
                 </li>
                 <li id='output-tab' class="tab" data-tab="Output">
                     Output
+                </li>
+                <li class="tab" data-tab="Analytics">
+                    Analytics
                 </li>
             </ul>
             <div class="tab-window">
@@ -64,8 +74,204 @@
                         </div>
                     </fieldset>
                 </div>
+
+                <!-- Analytics Tab Content -->
+                <div data-tab="Analytics" id="analytics-wrapper">
+                    <!-- Alert Section -->
+                    <div id="dashboard-alert"></div>
+                    
+                    <!-- Dashboard Header -->
+                    <div class="dashboard-header">
+                        <div class="row align-items-center">
+                            <div class="col-lg-8">
+                                <h1>
+                                    <i class="bi bi-graph-up me-2"></i>
+                                    Analytics Dashboard
+                                </h1>
+                                <p class="mb-0">Comprehensive overview of ML model analysis results</p>
+                            </div>
+                            <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                                <div class="header-actions">
+                                    <button class="btn btn-refresh" id="refresh-dashboard">
+                                        <i class="bi bi-arrow-clockwise me-2"></i>
+                                        Refresh
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Summary Cards -->
+                    <div class="dashboard-section">
+                        <h3 class="mb-3">Summary Statistics</h3>
+                        <div class="analytics-grid">
+                            
+                            <!-- Total Models Card -->
+                            <div class="analytics-card card-primary fade-in">
+                                <div class="card-icon">
+                                    <i class="bi bi-file-earmark-code"></i>
+                                </div>
+                                <div class="card-title">Total Models</div>
+                                <div class="card-value" id="total-models">0</div>
+                                <div class="card-subtitle">Analyzed model instances</div>
+                            </div>
+                            
+                            <!-- Consumer Count Card -->
+                            <div class="analytics-card card-info fade-in">
+                                <div class="card-icon">
+                                    <i class="bi bi-download"></i>
+                                </div>
+                                <div class="card-title">Consumer Models</div>
+                                <div class="card-value" id="consumer-count">0</div>
+                                <div class="card-subtitle">Models consuming ML predictions</div>
+                            </div>
+                            
+                            <!-- Producer Count Card -->
+                            <div class="analytics-card card-danger fade-in">
+                                <div class="card-icon">
+                                    <i class="bi bi-upload"></i>
+                                </div>
+                                <div class="card-title">Producer Models</div>
+                                <div class="card-value" id="producer-count">0</div>
+                                <div class="card-subtitle">Models producing ML predictions</div>
+                            </div>
+                            
+                            <!-- Total Projects Card -->
+                            <div class="analytics-card card-success fade-in">
+                                <div class="card-icon">
+                                    <i class="bi bi-folder"></i>
+                                </div>
+                                <div class="card-title">Total Projects</div>
+                                <div class="card-value" id="total-projects">0</div>
+                                <div class="card-subtitle">Analyzed projects</div>
+                            </div>
+                            
+                            <!-- Total Libraries Card -->
+                            <div class="analytics-card card-warning fade-in">
+                                <div class="card-icon">
+                                    <i class="bi bi-stack"></i>
+                                </div>
+                                <div class="card-title">ML Libraries</div>
+                                <div class="card-value" id="total-libraries">0</div>
+                                <div class="card-subtitle">Unique ML libraries used</div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Distribution Charts -->
+                    <div class="dashboard-section">
+                        <h3 class="mb-3">Consumer vs Producer Distribution</h3>
+                        <div class="charts-grid">
+                            
+                            <!-- Pie Chart -->
+                            <div class="chart-card fade-in">
+                                <div class="chart-header">
+                                    <div>
+                                        <h4 class="chart-title">Percentage Distribution</h4>
+                                        <p class="chart-subtitle mb-0">Consumer and Producer percentages</p>
+                                    </div>
+                                </div>
+                                <div class="chart-body">
+                                    <div class="chart-container">
+                                        <canvas id="pieChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Bar Chart -->
+                            <div class="chart-card fade-in">
+                                <div class="chart-header">
+                                    <div>
+                                        <h4 class="chart-title">Absolute Counts</h4>
+                                        <p class="chart-subtitle mb-0">Number of Consumer and Producer models</p>
+                                    </div>
+                                </div>
+                                <div class="chart-body">
+                                    <div class="chart-container">
+                                        <canvas id="barChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Keywords Chart -->
+                    <div class="dashboard-section">
+                        <h3 class="mb-3">Top Keywords Used in Classification</h3>
+                        <div class="chart-card fade-in">
+                            <div class="chart-header">
+                                <div>
+                                    <h4 class="chart-title">Keyword Frequency</h4>
+                                    <p class="chart-subtitle mb-0">Most frequently used keywords for model classification</p>
+                                </div>
+                                <div class="chart-actions">
+                                    <button class="chart-action-btn" onclick="if(window.dashboard) dashboard.loadKeywords(5)">Top 5</button>
+                                    <button class="chart-action-btn" onclick="if(window.dashboard) dashboard.loadKeywords(10)">Top 10</button>
+                                    <button class="chart-action-btn" onclick="if(window.dashboard) dashboard.loadKeywords(15)">Top 15</button>
+                                </div>
+                            </div>
+                            <div class="chart-body">
+                                <div class="chart-container chart-container-lg">
+                                    <canvas id="keywordsChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Libraries Chart -->
+                    <div class="dashboard-section">
+                        <h3 class="mb-3">ML Library Distribution</h3>
+                        <div class="chart-card fade-in">
+                            <div class="chart-header">
+                                <div>
+                                    <h4 class="chart-title">Library Usage</h4>
+                                    <p class="chart-subtitle mb-0">Most commonly used ML libraries in analyzed projects</p>
+                                </div>
+                                <div class="chart-actions">
+                                    <button class="chart-action-btn" onclick="if(window.dashboard) dashboard.loadLibraries(5)">Top 5</button>
+                                    <button class="chart-action-btn" onclick="if(window.dashboard) dashboard.loadLibraries(10)">Top 10</button>
+                                    <button class="chart-action-btn" onclick="if(window.dashboard) dashboard.loadLibraries(15)">Top 15</button>
+                                </div>
+                            </div>
+                            <div class="chart-body">
+                                <div class="chart-container chart-container-lg">
+                                    <canvas id="librariesChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Last Analysis Info -->
+                    <div class="dashboard-section">
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle me-2"></i>
+                            <strong>Last Analysis:</strong> <span id="last-analysis">Not available</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <!-- Filtered Results Modal -->
+        <div class="modal fade" id="filteredResultsModal" tabindex="-1" aria-labelledby="filteredResultsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="filteredResultsModalLabel">Filtered Results</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Results will be populated by JavaScript -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <template id="loading-popup-template">
             <div id="loading-popup-container">
                 <div class="loading-popup">
@@ -104,5 +310,72 @@
 		        </div>
             </div>
         </template>
+
+        <!-- Bootstrap 5 JS Bundle -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        
+        <!-- Chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+        
+        <!-- Dashboard JavaScript -->
+        <script src="../static/js/dashboard.js"></script>
+        
+        <!-- Initialize Dashboard -->
+        <script>
+            // Initialize dashboard instance
+            window.dashboard = null;
+            
+            document.addEventListener('DOMContentLoaded', function() {
+                // Create dashboard instance
+                window.dashboard = new AnalyticsDashboard();
+                
+                // Listen for tab changes to initialize dashboard when Analytics tab is opened
+                document.addEventListener('tabChanged', function(e) {
+                    if (e.detail.tab === 'Analytics' && window.dashboard) {
+                        // Get output path from session storage or output field
+                        let outputPath = sessionStorage.getItem('lastOutputPath');
+                        if (!outputPath) {
+                            const outputField = document.getElementById('output_field');
+                            outputPath = outputField ? outputField.value : null;
+                        }
+                        
+                        if (outputPath) {
+                            // Initialize dashboard with output path
+                            window.dashboard.init(outputPath);
+                        } else {
+                            // Show message to run analysis first
+                            const alertEl = document.getElementById('dashboard-alert');
+                            if (alertEl) {
+                                alertEl.innerHTML = `
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                        <strong>No analysis results found!</strong> 
+                                        Please run an analysis first or specify an output path in the Input tab.
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                    </div>
+                                `;
+                            }
+                        }
+                    }
+                });
+                
+                // Refresh button handler
+                const refreshBtn = document.getElementById('refresh-dashboard');
+                if (refreshBtn) {
+                    refreshBtn.addEventListener('click', function() {
+                        let outputPath = sessionStorage.getItem('lastOutputPath');
+                        if (!outputPath) {
+                            const outputField = document.getElementById('output_field');
+                            outputPath = outputField ? outputField.value : null;
+                        }
+                        
+                        if (outputPath && window.dashboard) {
+                            window.dashboard.refresh(outputPath);
+                        } else {
+                            alert('Please specify an output path first in the Input tab');
+                        }
+                    });
+                }
+            });
+        </script>
     </body>
 </html>

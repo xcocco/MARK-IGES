@@ -119,6 +119,8 @@ async function getResults() {
         let resultsList = await ResultsRequests.requestList(output_path)
         console.log(resultsList)
         if (resultsList.success === true) {
+            // Store output path in session storage for analytics dashboard
+            sessionStorage.setItem('lastOutputPath', output_path)
             LoadingDialog.hideLoadingPopup()
             document.getElementById('output-tab').click()
             return resultsList

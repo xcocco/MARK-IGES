@@ -98,6 +98,9 @@ def create_app(config_name=None):
         return jsonify({
             'service': 'MARK Analysis Tool API',
             'version': '1.0.0',
+            'web_pages': {
+                'home': '/'
+            },
             'endpoints': {
                 'health': '/health',
                 'analysis': {

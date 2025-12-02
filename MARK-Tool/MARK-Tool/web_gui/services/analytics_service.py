@@ -3,6 +3,7 @@ Analytics Service - Handles data aggregation and analytics for MARK results
 """
 import os
 import csv
+import glob
 from typing import Dict, List, Tuple, Optional
 from collections import Counter
 from datetime import datetime
@@ -316,15 +317,19 @@ class AnalyticsService:
         
         Args:
             output_path: Path to the output folder
-            filename: Name of the CSV file
+            filename: Name of the CSV file (e.g., 'consumer.csv' or 'producer.csv')
             
         Returns:
             List of dictionaries (rows)
         """
+        # First try direct path
         file_path = os.path.join(output_path, filename)
         
         if not os.path.exists(file_path):
-            return []
+            # Search for the file in subdirectories
+            file_path = self._find_csv_file(output_path, filename)
+            if not file_path:
+                return []
         
         data = []
         
@@ -338,6 +343,69 @@ class AnalyticsService:
             return []
         
         return data
+    
+    def _find_csv_file(self, output_path: str, filename: str) -> Optional[str]:
+        """
+        Search for CSV file in subdirectories
+        
+        Args:
+            output_path: Root path to search
+            filename: Filename pattern to search for (e.g., 'consumer.csv')
+            
+        Returns:
+            Full path to the file if found, None otherwise
+        """
+        # Determine search pattern based on filename
+        if 'consumer' in filename.lower():
+            # Look for consumer-related files
+            search_patterns = ['consumer.csv', '*consumer*.csv', 'results_consumer.csv']
+            search_dirs = ['Consumers', 'Consumers_Final', 'Consumer']
+        elif 'producer' in filename.lower():
+            # Look for producer-related files
+            search_patterns = ['producer.csv', '*producer*.csv', 'results_producer.csv']
+            search_dirs = ['Producers', 'Producers_Final', 'Producer']
+        else:
+            search_patterns = [filename]
+            search_dirs = []
+        
+        # First, check common subdirectories
+        for subdir in search_dirs:
+            subdir_path = os.path.join(output_path, subdir)
+            if os.path.exists(subdir_path):
+                # Check direct match in subdirectory
+                for pattern in search_patterns:
+                    if '*' in pattern:
+                        # Use glob for wildcard patterns
+                        matches = glob.glob(os.path.join(subdir_path, pattern))
+                        if matches:
+                            # Return the first match (prefer exact names)
+                            return matches[0]
+                    else:
+                        file_path = os.path.join(subdir_path, pattern)
+                        if os.path.exists(file_path):
+                            return file_path
+                
+                # Check subdirectories within this directory
+                for root, dirs, files in os.walk(subdir_path):
+                    for pattern in search_patterns:
+                        if '*' in pattern:
+                            matches = glob.glob(os.path.join(root, pattern))
+                            if matches:
+                                return matches[0]
+                        elif pattern in files:
+                            return os.path.join(root, pattern)
+        
+        # If not found in specific directories, do a full recursive search
+        for root, dirs, files in os.walk(output_path):
+            for pattern in search_patterns:
+                if '*' in pattern:
+                    matches = glob.glob(os.path.join(root, pattern))
+                    if matches:
+                        return matches[0]
+                elif pattern in files:
+                    return os.path.join(root, pattern)
+        
+        return None
     
     def validate_output_path(self, output_path: str) -> Tuple[bool, str]:
         """
@@ -358,14 +426,14 @@ class AnalyticsService:
         if not os.path.isdir(output_path):
             return False, f"Output path is not a directory: {output_path}"
         
-        # Check for at least one CSV file
+        # Check for at least one CSV file (direct or in subdirectories)
         consumer_path = os.path.join(output_path, self.consumer_csv)
         producer_path = os.path.join(output_path, self.producer_csv)
         
-        has_consumer = os.path.exists(consumer_path)
-        has_producer = os.path.exists(producer_path)
+        has_consumer = os.path.exists(consumer_path) or self._find_csv_file(output_path, self.consumer_csv) is not None
+        has_producer = os.path.exists(producer_path) or self._find_csv_file(output_path, self.producer_csv) is not None
         
         if not has_consumer and not has_producer:
-            return False, "No consumer.csv or producer.csv found in output path"
+            return False, "No consumer or producer CSV files found in output path or its subdirectories"
         
         return True, "Output path is valid"
