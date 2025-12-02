@@ -416,7 +416,7 @@ class TestIntegration:
     
     def test_root_endpoint_documentation(self, client):
         """Test the root endpoint returns API documentation"""
-        response = client.get('/')
+        response = client.get('/endpoints')
         
         assert response.status_code == 200
         data = json.loads(response.data)

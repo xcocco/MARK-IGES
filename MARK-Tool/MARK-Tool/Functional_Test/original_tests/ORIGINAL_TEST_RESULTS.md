@@ -1,6 +1,6 @@
 # Report Test Funzionali MARK-Tool (Originali)
 
-**Data Esecuzione:** 02/12/2025 14:02:31
+**Data Esecuzione:** 02/12/2025 17:02:14
 
 ## Sommario
 
@@ -16,16 +16,16 @@
 
 | Codice Test | Descrizione | Risultato | Durata |
 |-------------|-------------|-----------|---------|
-| EA_0 | Directory input non esistente | ✅ PASS | 0.730s |
-| EA_1 | Directory input vuota | ✅ PASS | 0.710s |
-| EA_2 | Singolo progetto ML producer | ❌ FAIL | 0.771s |
-| EA_3 | Singolo progetto ML consumer | ✅ PASS | 0.624s |
-| EA_4 | Progetto producer e consumer | ✅ PASS | 0.599s |
-| EA_5 | Progetti senza pattern ML | ✅ PASS | 0.585s |
-| EA_6 | Un producer e un consumer | ✅ PASS | 0.625s |
-| EA_7 | Solo consumer (multipli) | ✅ PASS | 0.675s |
-| EA_8 | Multipli producer, un consumer | ✅ PASS | 0.597s |
-| EA_9 | Multipli producer e consumer | ✅ PASS | 0.648s |
+| EA_0 | Directory input non esistente | ✅ PASS | 0.450s |
+| EA_1 | Directory input vuota | ✅ PASS | 0.516s |
+| EA_2 | Singolo progetto ML producer | ❌ FAIL | 0.488s |
+| EA_3 | Singolo progetto ML consumer | ✅ PASS | 0.444s |
+| EA_4 | Progetto producer e consumer | ✅ PASS | 0.455s |
+| EA_5 | Progetti senza pattern ML | ✅ PASS | 0.448s |
+| EA_6 | Un producer e un consumer | ✅ PASS | 0.442s |
+| EA_7 | Solo consumer (multipli) | ✅ PASS | 0.448s |
+| EA_8 | Multipli producer, un consumer | ✅ PASS | 0.456s |
+| EA_9 | Multipli producer e consumer | ✅ PASS | 0.446s |
 
 ### ❌ Errori in Exec Analysis Tests
 
@@ -46,10 +46,10 @@ Traceback (most recent call last):
 
 | Codice Test | Descrizione | Risultato | Durata |
 |-------------|-------------|-----------|---------|
-| CL_0 | File CSV non esistente | ✅ PASS | 1.855s |
-| CL_1 | File CSV vuoto | ✅ PASS | 0.711s |
-| CL_2 | Singola repository | ✅ PASS | 7.790s |
-| CL_3 | Multiple repository | ✅ PASS | 4.213s |
+| CL_0 | File CSV non esistente | ✅ PASS | 0.545s |
+| CL_1 | File CSV vuoto | ✅ PASS | 0.611s |
+| CL_2 | Singola repository | ✅ PASS | 4.720s |
+| CL_3 | Multiple repository | ✅ PASS | 3.711s |
 
 ---
 
@@ -76,4 +76,4 @@ Test funzionali per `exec_analysis.py` - analisi di progetti ML per identificare
 ### Cloner Tests (CL_X)
 Test funzionali per `cloner.py` - clonazione di repository GitHub da file CSV.
 
-*Report generato automaticamente il 02/12/2025 alle 14:02:45*
+*Report generato automaticamente il 02/12/2025 alle 17:02:24*
