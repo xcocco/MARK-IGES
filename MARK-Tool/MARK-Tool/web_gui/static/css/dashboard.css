@@ -1,0 +1,450 @@
+/**
+ * Dashboard Styles - Analytics Dashboard Components
+ * Modern UI styles for analytics cards, charts, and dashboard layout
+ */
+
+/* ===== Dashboard Container ===== */
+.dashboard-container {
+    padding: 2rem 0;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+}
+
+/* Analytics wrapper within tab */
+#analytics-wrapper {
+    padding: 2rem;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    overflow-y: auto;
+    height: 100%;
+    display: block;
+    width: 100%;
+}
+
+#analytics-wrapper h1,
+#analytics-wrapper h3,
+#analytics-wrapper h4 {
+    display: block;
+}
+
+#analytics-wrapper .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -0.75rem;
+    margin-left: -0.75rem;
+}
+
+#analytics-wrapper .col-lg-8,
+#analytics-wrapper .col-lg-4 {
+    position: relative;
+    width: 100%;
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+}
+
+.dashboard-section {
+    margin-bottom: 2rem;
+    display: block;
+    width: 100%;
+}
+
+/* ===== Analytics Cards ===== */
+.analytics-card {
+    background: #ffffff !important;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0.75rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex: 1 1 0;
+    min-width: 150px;
+    height: 8rem;
+}
+
+.analytics-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.analytics-card .card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    margin: 0 auto 0.5rem;
+    flex-shrink: 0;
+}
+
+.analytics-card.card-primary .card-icon {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.analytics-card.card-info .card-icon {
+    background: linear-gradient(135deg, #36a2eb 0%, #1e88e5 100%);
+    color: white;
+}
+
+.analytics-card.card-danger .card-icon {
+    background: linear-gradient(135deg, #ff6384 0%, #e91e63 100%);
+    color: white;
+}
+
+.analytics-card.card-success .card-icon {
+    background: linear-gradient(135deg, #4bc0c0 0%, #26a69a 100%);
+    color: white;
+}
+
+.analytics-card.card-warning .card-icon {
+    background: linear-gradient(135deg, #ff9f40 0%, #ff6f00 100%);
+    color: white;
+}
+
+.analytics-card .card-title {
+    font-size: 0.7rem;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.analytics-card .card-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+}
+
+.analytics-card .card-subtitle {
+    font-size: 0.65rem;
+    color: #95a5a6;
+    line-height: 1.2;
+    margin: 0;
+}
+
+/* ===== Chart Cards ===== */
+.chart-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.chart-card .chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.chart-card .chart-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.chart-card .chart-subtitle {
+    font-size: 0.875rem;
+    color: #7f8c8d;
+    margin-top: 0.25rem;
+}
+
+.chart-card .chart-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.chart-card .chart-action-btn {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+    background: #ffffff;
+    color: #495057;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.chart-card .chart-action-btn:hover {
+    background: #f8f9fa;
+    border-color: #adb5bd;
+}
+
+.chart-card .chart-body {
+    position: relative;
+    min-height: 300px;
+}
+
+.chart-card .chart-container {
+    position: relative;
+    height: 350px;
+    width: 100%;
+}
+
+.chart-card .chart-container-sm {
+    height: 250px;
+}
+
+.chart-card .chart-container-lg {
+    height: 450px;
+}
+
+/* ===== Dashboard Header ===== */
+.dashboard-header {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.dashboard-header p {
+    font-size: 1rem;
+    color: #7f8c8d;
+    margin-bottom: 0;
+}
+
+.dashboard-header .header-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.dashboard-header .btn-refresh {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.9375rem;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.dashboard-header .btn-refresh:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* ===== Alert Section ===== */
+#dashboard-alert {
+    margin-bottom: 1.5rem;
+}
+
+/* ===== Grid Layout ===== */
+.analytics-grid {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.charts-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .analytics-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===== Loading States ===== */
+.chart-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    color: #6c757d;
+}
+
+.chart-loading .spinner-border {
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 1rem;
+}
+
+.chart-loading-text {
+    font-size: 1rem;
+    color: #6c757d;
+}
+
+/* ===== Empty State ===== */
+.chart-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    color: #6c757d;
+    text-align: center;
+}
+
+.chart-empty-icon {
+    font-size: 4rem;
+    color: #dee2e6;
+    margin-bottom: 1rem;
+}
+
+.chart-empty-text {
+    font-size: 1rem;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.chart-empty-subtext {
+    font-size: 0.875rem;
+    color: #adb5bd;
+}
+
+/* ===== Filtered Results Modal ===== */
+#filteredResultsModal .modal-dialog {
+    max-width: 90%;
+}
+
+#filteredResultsModal .table {
+    font-size: 0.875rem;
+}
+
+#filteredResultsModal .table thead {
+    background: #f8f9fa;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+#filteredResultsModal .modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 1200px) {
+    .chart-card .chart-container {
+        height: 300px;
+    }
+}
+
+@media (max-width: 992px) {
+    .dashboard-header h1 {
+        font-size: 1.75rem;
+    }
+    
+    .analytics-card .card-value {
+        font-size: 1.75rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .dashboard-container {
+        padding: 1rem 0;
+    }
+    
+    .dashboard-header {
+        padding: 1.5rem;
+    }
+    
+    .dashboard-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .chart-card {
+        padding: 1rem;
+    }
+    
+    .analytics-card {
+        padding: 1rem;
+    }
+    
+    .analytics-card .card-value {
+        font-size: 1.5rem;
+    }
+    
+    .chart-card .chart-container {
+        height: 250px;
+    }
+}
+
+/* ===== Utility Classes ===== */
+.text-gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.text-gradient-info {
+    background: linear-gradient(135deg, #36a2eb 0%, #1e88e5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.text-gradient-danger {
+    background: linear-gradient(135deg, #ff6384 0%, #e91e63 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}

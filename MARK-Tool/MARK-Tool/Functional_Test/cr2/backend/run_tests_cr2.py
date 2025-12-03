@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-MARK-Tool Backend Test Runner
-Comprehensive test execution script
+MARK-Tool CR2 Backend Test Runner
+Comprehensive test execution script for Analytics Dashboard
 """
 import sys
 import os
@@ -35,7 +35,6 @@ def main():
     """Main test runner"""
     # Get the directory where this script is located
     script_dir = Path(__file__).parent
-    test_dir = script_dir / 'web_backend_tests'
     
     # Pulisci i risultati temporanei precedenti
     temp_results = script_dir / '.test_results_temp.json'
@@ -43,13 +42,19 @@ def main():
         temp_results.unlink()
         print("🗑️  Risultati precedenti rimossi\n")
     
+    # Rimuovi anche il vecchio report markdown se esiste
+    old_report = script_dir / 'TEST_RESULTS.md'
+    if old_report.exists():
+        old_report.unlink()
+        print("🗑️  Vecchio report TEST_RESULTS.md rimosso\n")
+    
     # Change to test directory
     os.chdir(script_dir)
     
-    print_header("MARK-Tool Backend API Test Suite")
-    print("Test Planning: CR1 - Backend Testing")
-    print("Total Expected Tests: 51+")
-    print(f"Test Directory: {test_dir}\n")
+    print_header("MARK-Tool CR2 Analytics Dashboard Test Suite")
+    print("Test Planning: CR2 - Analytics Backend Testing")
+    print("Total Expected Tests: 50+ (20 unit + 30 API + integration)")
+    print(f"Test Directory: {script_dir}\n")
     
     results = []
     
@@ -61,31 +66,24 @@ def main():
         print("Please run: pip install -r requirements-test.txt")
         return 1
     
-    # Test 1: Analysis Routes
-    print_header("Test Suite 1/4: Analysis Routes (9 tests)")
+    # Test 1: AnalyticsService Unit Tests
+    print_header("Test Suite 1/3: AnalyticsService Unit Tests (20 tests)")
     results.append(run_command(
-        [sys.executable, '-m', 'pytest', 'web_backend_tests/test_analysis_routes.py', '-v'],
-        "Analysis Routes Tests"
+        [sys.executable, '-m', 'pytest', 'test_analytics_service.py', '-v'],
+        "AnalyticsService Unit Tests"
     ))
     
-    # Test 2: File Routes
-    print_header("Test Suite 2/4: File Routes (11 tests)")
+    # Test 2: Analytics API Tests
+    print_header("Test Suite 2/3: Analytics API Tests (30 tests)")
     results.append(run_command(
-        [sys.executable, '-m', 'pytest', 'web_backend_tests/test_file_routes.py', '-v'],
-        "File Routes Tests"
+        [sys.executable, '-m', 'pytest', 'test_analytics_api.py', '-v'],
+        "Analytics API Tests"
     ))
     
-    # Test 3: Results Routes
-    print_header("Test Suite 3/4: Results Routes (12 tests)")
+    # Test 3: Integration Tests
+    print_header("Test Suite 3/3: Integration Tests (4 tests)")
     results.append(run_command(
-        [sys.executable, '-m', 'pytest', 'web_backend_tests/test_results_routes.py', '-v'],
-        "Results Routes Tests"
-    ))
-    
-    # Test 4: Integration Tests
-    print_header("Test Suite 4/4: Integration Tests (6+ tests)")
-    results.append(run_command(
-        [sys.executable, '-m', 'pytest', 'web_backend_tests/test_integration.py', '-v'],
+        [sys.executable, '-m', 'pytest', 'test_integration.py', '-v'],
         "Integration Tests"
     ))
     
@@ -97,17 +95,23 @@ def main():
     
     print(f"Test Suites: {passed}/{total} passed")
     
+    suite_names = [
+        "AnalyticsService Unit Tests",
+        "Analytics API Tests",
+        "Integration Tests"
+    ]
+    
     for i, result in enumerate(results, 1):
         status = "[OK] PASSED" if result else "[X] FAILED"
-        suite_name = [
-            "Analysis Routes",
-            "File Routes",
-            "Results Routes",
-            "Integration Tests"
-        ][i - 1]
+        suite_name = suite_names[i - 1] if i <= len(suite_names) else f"Suite {i}"
         print(f"  Suite {i}: {suite_name} - {status}")
     
     print("\n" + "=" * 80)
+    
+    # Verifica se il report markdown è stato generato
+    report_file = script_dir / 'TEST_RESULTS.md'
+    if report_file.exists():
+        print("\n📝 Report dettagliato generato: TEST_RESULTS.md\n")
     
     if all(results):
         print("\n All test suites PASSED! \n")
@@ -115,9 +119,11 @@ def main():
     else:
         print("\n Some test suites FAILED \n")
         print("Run individual test suites with:")
-        print("  pytest web_backend_tests/test_<module>.py -v")
+        print("  pytest test_analytics_service.py -v")
+        print("  pytest test_analytics_api.py -v")
+        print("  pytest test_integration.py -v")
         print("\nFor detailed output:")
-        print("  pytest web_backend_tests/ -vv --tb=long")
+        print("  pytest -vv --tb=long")
         return 1
 
 

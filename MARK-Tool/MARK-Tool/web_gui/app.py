@@ -10,7 +10,8 @@ from flask_cors import CORS
 from .config import get_config
 from .services.file_service import FileService
 from .services.analysis_service import AnalysisService
-from .routes import analysis_routes, file_routes, results_routes
+from .services.analytics_service import AnalyticsService
+from .routes import analysis_routes, file_routes, results_routes, analytics_routes
 
 
 def create_app(config_name=None):
@@ -57,15 +58,19 @@ def create_app(config_name=None):
         cloner_path=app.config['CLONER_PATH']
     )
     
+    analytics_service = AnalyticsService()
+    
     # Initialize routes with services
     analysis_routes.init_analysis_service(analysis_service)
     file_routes.init_file_service(file_service)
     results_routes.init_file_service(file_service)
+    analytics_routes.init_analytics_service(analytics_service)
     
     # Register blueprints
     app.register_blueprint(analysis_routes.analysis_bp)
     app.register_blueprint(file_routes.file_bp)
     app.register_blueprint(results_routes.results_bp)
+    app.register_blueprint(analytics_routes.analytics_bp)
     
     # Register error handlers
     register_error_handlers(app)
@@ -93,6 +98,9 @@ def create_app(config_name=None):
         return jsonify({
             'service': 'MARK Analysis Tool API',
             'version': '1.0.0',
+            'web_pages': {
+                'home': '/'
+            },
             'endpoints': {
                 'health': '/health',
                 'analysis': {
@@ -115,6 +123,14 @@ def create_app(config_name=None):
                     'view': 'GET /api/results/view',
                     'stats': 'GET /api/results/stats',
                     'search': 'POST /api/results/search'
+                },
+                'analytics': {
+                    'summary': 'GET /api/analytics/summary',
+                    'distribution': 'GET /api/analytics/consumer-producer-distribution',
+                    'keywords': 'GET /api/analytics/keywords',
+                    'libraries': 'GET /api/analytics/libraries',
+                    'filter': 'GET /api/analytics/filter',
+                    'health': 'GET /api/analytics/health'
                 }
             }
         }), 200

@@ -13,10 +13,19 @@ class ExecAnalyzer:
         self.output_path = output_path or script_dir
 
     def run(self):
+        import time
+        start_time = time.time()
+        
         # Check input and output paths
         if not os.path.exists(self.input_path):
             print(f"Error: The input folder '{self.input_path}' does not exist.")
             exit(1)
+        
+        print(f"\n{'='*60}")
+        print(f"Starting Analysis Process")
+        print(f"Input path: {self.input_path}")
+        print(f"Output path: {self.output_path}")
+        print(f"{'='*60}\n")
 
         # --- ML-Model Producers ---
         output_base_folder = os.path.join(self.output_path, "Producers")
@@ -81,8 +90,21 @@ if __name__ == "__main__":
     print(f"Starting ablation analysis with input path: {args.input_path} and output path: {args.output_path}")
 
     # Aggiunta esecuzione processo di conversione dei file . in .py
+    import time
+    print(f"\n{'='*60}")
+    print("Step 1: Converting Jupyter Notebooks to Python files")
+    print(f"{'='*60}")
+    conv_start = time.time()
     converter = NotebookConverter()
     converter.run()
-
+    conv_end = time.time()
+    print(f"\n[TIMING] Notebook conversion took: {conv_end - conv_start:.2f} seconds")
+    
+    print(f"\n{'='*60}")
+    print("Step 2: Starting Project Analysis")
+    print(f"{'='*60}\n")
     analyzer = ExecAnalyzer(input_path=args.input_path, output_path=args.output_path)
+    analysis_start = time.time()
     analyzer.run()
+    analysis_end = time.time()
+    print(f"\n[TIMING] Total analysis took: {analysis_end - analysis_start:.2f} seconds")

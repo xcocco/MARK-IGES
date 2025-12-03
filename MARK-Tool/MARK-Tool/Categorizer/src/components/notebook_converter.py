@@ -10,9 +10,13 @@ class NotebookConverter:
 
     def convert_all_notebooks(self):
         converted_files = []
+        print(f"[NotebookConverter] Scanning for .ipynb files in: {self.folder_path}")
+        file_count = 0
         for root, _, files in os.walk(self.folder_path):
             for file in files:
                 if file.endswith('.ipynb'):
+                    file_count += 1
+                    print(f"[NotebookConverter] Found notebook #{file_count}: {os.path.join(root, file)}")
                     full_path = os.path.join(root, file)
                     try:
                         converted_file = self.convert_notebook_to_code(full_path)
@@ -27,9 +31,10 @@ class NotebookConverter:
             print(f"Error: The folder '{self.folder_path}' does not exist.")
             return
 
+        print(f"[NotebookConverter] Starting notebook conversion process...")
         try:
             converted_files = self.convert_all_notebooks()
-            print("\nConversion completed.")
+            print(f"\n[NotebookConverter] Conversion completed. Total files converted: {len(converted_files)}")
             print("Converted files:")
             for file in converted_files:
                 print(file)

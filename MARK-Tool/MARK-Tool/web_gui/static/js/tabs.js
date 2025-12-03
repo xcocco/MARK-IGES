@@ -58,6 +58,10 @@ export function selectTab(tabName) {
             else element.classList.remove('tab-window-hidden')
         }
     )
+    
+    // Dispatch custom event for tab change
+    const event = new CustomEvent('tabChanged', { detail: { tab: tabName } });
+    document.dispatchEvent(event);
 }
 
 export function removeTab(tabName) {

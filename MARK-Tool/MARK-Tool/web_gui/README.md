@@ -353,6 +353,151 @@ List all CSV files in a directory.
 
 ---
 
+### Analytics Endpoints
+
+#### Get Summary
+
+```
+GET /api/analytics/summary?output_path=/path/to/results
+```
+
+Get a summary of analysis results including total counts, projects, and libraries.
+
+**Response:**
+```json
+{
+  "success": true,
+  "total_models": 120,
+  "consumer_count": 70,
+  "producer_count": 50,
+  "total_projects": 25,
+  "total_libraries": 8,
+  "last_analysis_id": "2025-11-24T10:32:01",
+  "output_path": "/path/to/results"
+}
+```
+
+#### Get Consumer/Producer Distribution
+
+```
+GET /api/analytics/consumer-producer-distribution?output_path=/path/to/results
+```
+
+Get the distribution of consumer and producer models for charts.
+
+**Response:**
+```json
+{
+  "success": true,
+  "labels": ["Consumer", "Producer"],
+  "counts": [70, 50],
+  "percentages": [58.33, 41.67]
+}
+```
+
+#### Get Top Keywords
+
+```
+GET /api/analytics/keywords?output_path=/path/to/results&limit=10
+```
+
+Get the top N keywords used in classification.
+
+**Query Parameters:**
+- `output_path` (required): Path to results folder
+- `limit` (optional, default=10): Maximum keywords to return (1-100)
+
+**Response:**
+```json
+{
+  "success": true,
+  "labels": [".predict(", ".fit(", ".no_grad(", ".train("],
+  "counts": [30, 25, 18, 12],
+  "total_unique_keywords": 45
+}
+```
+
+#### Get Library Distribution
+
+```
+GET /api/analytics/libraries?output_path=/path/to/results&limit=10
+```
+
+Get the distribution of ML libraries used.
+
+**Query Parameters:**
+- `output_path` (required): Path to results folder
+- `limit` (optional, default=10): Maximum libraries to return (1-100)
+
+**Response:**
+```json
+{
+  "success": true,
+  "labels": ["tensorflow", "torch", "keras", "sklearn"],
+  "counts": [45, 38, 25, 12],
+  "total_unique_libraries": 15
+}
+```
+
+#### Filter Results
+
+```
+GET /api/analytics/filter?output_path=/path/to/results&type=consumer&keyword=.predict(&limit=100
+```
+
+Get filtered results based on various criteria.
+
+**Query Parameters:**
+- `output_path` (required): Path to results folder
+- `type` (optional): Filter by 'consumer' or 'producer'
+- `keyword` (optional): Filter by specific keyword
+- `library` (optional): Filter by specific library
+- `project` (optional): Filter by project name (partial match)
+- `limit` (optional, default=100): Maximum results to return (1-1000)
+
+**Response:**
+```json
+{
+  "success": true,
+  "count": 15,
+  "results": [
+    {
+      "type": "consumer",
+      "ProjectName": "TestProject",
+      "where": "path/to/file.py",
+      "line_number": "42",
+      "libraries": "tensorflow",
+      "keywords": ".predict("
+    },
+    ...
+  ],
+  "filters_applied": {
+    "type": "consumer",
+    "keyword": ".predict(",
+    "library": null,
+    "project": null
+  }
+}
+```
+
+#### Analytics Health Check
+
+```
+GET /api/analytics/health
+```
+
+Health check endpoint for analytics service.
+
+**Response:**
+```json
+{
+  "status": "healthy",
+  "service": "Analytics API"
+}
+```
+
+---
+
 ### Results Endpoints
 
 #### List Results

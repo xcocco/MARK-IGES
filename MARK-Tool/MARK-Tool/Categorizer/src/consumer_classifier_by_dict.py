@@ -91,9 +91,20 @@ class MLConsumerAnalyzer(MLAnalyzerBase):
 
     def analyze_project_for_consumers(self, repo_contents, project, in_dir, consumer_library, producer_library, rules_3, rules_4):
         df = pd.DataFrame(columns=['ProjectName', 'Is ML consumer', 'libraries', "where", "keywords", 'line_number'])
+        
+        # Count total files first
+        total_files = sum(1 for root, dirs, files in os.walk(repo_contents) 
+                         for file in files if file.endswith(('.py', '.ipynb')))
+        print(f"    [ConsumerAnalyzer] Found {total_files} Python/Notebook files to analyze")
+        
+        file_count = 0
         for root, dirs, files in os.walk(repo_contents):
             for file in files:
                 if file.endswith(('.py', '.ipynb')):
+                    file_count += 1
+                    if file_count % 10 == 0:  # Progress every 10 files
+                        print(f"    [ConsumerAnalyzer] Progress: {file_count}/{total_files} files analyzed")
+                    
                     if rules_4 and re.search(r"test|example|eval|validat", file, re.IGNORECASE):
                         continue
                     file_path = os.path.join(root, file)
@@ -120,14 +131,20 @@ class MLConsumerAnalyzer(MLAnalyzerBase):
 
     def analyze_projects_set_for_consumers(self, input_folder, consumer_library, producer_library, rules_3, rules_4):
         df = pd.read_csv(self.results_file)
-
-        for project in os.listdir(input_folder):
-            if not os.path.isdir(os.path.join(input_folder, project)):
-                continue
-
-            for dir in os.listdir(os.path.join(input_folder, project)):
+        
+        projects = [p for p in os.listdir(input_folder) if os.path.isdir(os.path.join(input_folder, p))]
+        print(f"\n[ConsumerAnalyzer] Found {len(projects)} projects to analyze in: {input_folder}")
+        
+        project_count = 0
+        for project in projects:
+            project_count += 1
+            print(f"\n[ConsumerAnalyzer] Processing project {project_count}/{len(projects)}: {project}")
+            
+            subdirs = os.listdir(os.path.join(input_folder, project))
+            for dir in subdirs:
                 logging.info(f"Project: {project}")
                 if os.path.isdir(os.path.join(input_folder, project, dir)):
+                    print(f"  [ConsumerAnalyzer] Analyzing subdirectory: {dir}")
                     new_df = self.analyze_project_for_consumers(
                         os.path.join(input_folder, project, dir),
                         project,
