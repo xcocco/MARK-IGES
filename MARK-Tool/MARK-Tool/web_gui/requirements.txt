@@ -7,3 +7,9 @@ Werkzeug==3.0.1
 
 # CORS support
 Flask-CORS==4.0.0
+
+# HTTP requests for LM Studio
+requests>=2.31.0
+
+# Data processing (used by context builder)
+pandas>=2.0.3

@@ -7,11 +7,12 @@ import logging
 from flask import Flask, jsonify, render_template
 from flask_cors import CORS
 
-from .config import get_config
-from .services.file_service import FileService
-from .services.analysis_service import AnalysisService
-from .services.analytics_service import AnalyticsService
-from .routes import analysis_routes, file_routes, results_routes, analytics_routes
+from config import get_config
+from services.file_service import FileService
+from services.analysis_service import AnalysisService
+from services.analytics_service import AnalyticsService
+from services.llm_service import LLMService
+from routes import analysis_routes, file_routes, results_routes, analytics_routes, llm_routes
 
 
 def create_app(config_name=None):
@@ -60,17 +61,35 @@ def create_app(config_name=None):
     
     analytics_service = AnalyticsService()
     
+    # Initialize LLM service
+    try:
+        llm_service = LLMService(
+            llm_type=app.config['LLM_TYPE'],
+            base_url=app.config['LLM_BASE_URL'],
+            model=app.config['LLM_MODEL'],
+            temperature=app.config['LLM_TEMPERATURE'],
+            max_tokens=app.config['LLM_MAX_TOKENS'],
+            prompts_dir=app.config['PROMPTS_DIR']
+        )
+        app.logger.info('LLM Service initialized successfully')
+    except Exception as e:
+        app.logger.warning(f'LLM Service initialization failed: {e}')
+        llm_service = None
+    
     # Initialize routes with services
     analysis_routes.init_analysis_service(analysis_service)
     file_routes.init_file_service(file_service)
     results_routes.init_file_service(file_service)
     analytics_routes.init_analytics_service(analytics_service)
+    llm_routes.init_llm_service(llm_service)
+    llm_routes.init_analysis_service(analysis_service)
     
     # Register blueprints
     app.register_blueprint(analysis_routes.analysis_bp)
     app.register_blueprint(file_routes.file_bp)
     app.register_blueprint(results_routes.results_bp)
     app.register_blueprint(analytics_routes.analytics_bp)
+    app.register_blueprint(llm_routes.llm_bp)
     
     # Register error handlers
     register_error_handlers(app)
@@ -131,6 +150,16 @@ def create_app(config_name=None):
                     'libraries': 'GET /api/analytics/libraries',
                     'filter': 'GET /api/analytics/filter',
                     'health': 'GET /api/analytics/health'
+                },
+                'llm': {
+                    'status': 'GET /api/llm/status',
+                    'explain': 'POST /api/llm/explain',
+                    'ask': 'POST /api/llm/ask',
+                    'summary': 'POST /api/llm/summary',
+                    'session': 'GET /api/llm/session/<session_id>',
+                    'delete_session': 'DELETE /api/llm/session/<session_id>',
+                    'sessions': 'GET /api/llm/sessions',
+                    'clear_cache': 'POST /api/llm/cache/clear'
                 }
             }
         }), 200

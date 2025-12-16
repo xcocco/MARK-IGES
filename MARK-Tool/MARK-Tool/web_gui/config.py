@@ -43,6 +43,18 @@ class Config:
     # Logging
     LOG_LEVEL = 'INFO'
     LOG_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    
+    # LLM Configuration
+    LLM_TYPE = os.environ.get('LLM_TYPE', 'lmstudio')  # 'lmstudio' or 'openai'
+    LLM_BASE_URL = os.environ.get('LLM_BASE_URL', 'http://localhost:1234/v1')
+    LLM_MODEL = os.environ.get('LLM_MODEL', 'local-model')
+    LLM_API_KEY = os.environ.get('LLM_API_KEY', 'not-needed')
+    LLM_MAX_TOKENS = int(os.environ.get('LLM_MAX_TOKENS', '2000'))
+    LLM_TEMPERATURE = float(os.environ.get('LLM_TEMPERATURE', '0.3'))
+    
+    # Prompts paths
+    PROMPTS_DIR = os.path.join(BASE_DIR, 'prompts')
+    MARK_EXPERT_PROMPT = os.path.join(PROMPTS_DIR, 'mark_expert_prompt.txt')
 
 
 class DevelopmentConfig(Config):
