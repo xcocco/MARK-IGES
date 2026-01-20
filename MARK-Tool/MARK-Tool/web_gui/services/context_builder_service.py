@@ -237,9 +237,9 @@ class ContextBuilderService:
         Returns:
             Dictionary with complete context for all projects
         """
-        # Load analysis results from CSV files
-        producer_csv = os.path.join(output_path, 'ML-Model_Producers.csv')
-        consumer_csv = os.path.join(output_path, 'ML-Model_Consumers.csv')
+        # Load analysis results from CSV files - USE ACTUAL PATHS FROM ANALYSIS TOOL
+        producer_csv = os.path.join(output_path, 'Producers', 'Producers_Final', 'results_first_step.csv')
+        consumer_csv = os.path.join(output_path, 'Consumers', 'Consumers_Final', 'results_consumer.csv')
         
         # Parse CSV files
         producer_detections = []
@@ -274,6 +274,14 @@ class ContextBuilderService:
         logger.info(f"Found {len(project_names)} unique projects")
         logger.info(f"Producer detections: {len(producer_detections)}")
         logger.info(f"Consumer detections: {len(consumer_detections)}")
+        
+        # Issue 2: Validate that we have actual data before proceeding
+        if len(project_names) == 0:
+            error_msg = f"No projects found in analysis results. Checked paths:\n" \
+                       f"  Producer CSV: {producer_csv} (exists: {os.path.exists(producer_csv)})\n" \
+                       f"  Consumer CSV: {consumer_csv} (exists: {os.path.exists(consumer_csv)})"
+            logger.error(error_msg)
+            raise ValueError("No analysis results found. Please run the analysis first before using LLM features.")
         
         # Build context for all projects
         projects = []

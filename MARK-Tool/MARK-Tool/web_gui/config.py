@@ -56,6 +56,26 @@ class Config:
     # Prompts paths
     PROMPTS_DIR = os.path.join(BASE_DIR, 'prompts')
     MARK_EXPERT_PROMPT = os.path.join(PROMPTS_DIR, 'mark_expert_prompt.txt')
+    
+    @classmethod
+    def get_llm_config(cls):
+        """
+        Create LLMConfig instance from configuration settings.
+        
+        Returns:
+            LLMConfig instance with all LLM settings
+        """
+        from modules.llm_factory import LLMConfig
+        
+        return LLMConfig(
+            llm_type=cls.LLM_TYPE,
+            base_url=cls.LLM_BASE_URL,
+            model=cls.LLM_MODEL,
+            temperature=cls.LLM_TEMPERATURE,
+            max_tokens=cls.LLM_MAX_TOKENS,
+            timeout=cls.LLM_TIMEOUT,
+            api_key=cls.LLM_API_KEY
+        )
 
 
 class DevelopmentConfig(Config):

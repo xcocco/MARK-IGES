@@ -16,7 +16,7 @@ from typing import Dict, List, Optional, Tuple
 import uuid
 from datetime import datetime
 
-from modules.lmstudio_manager import LMStudioManager
+from modules.llm_factory import LLMFactory, LLMConfig
 from services.context_builder_service import ContextBuilderService
 
 
@@ -33,27 +33,17 @@ class LLMService:
     
     def __init__(
         self,
-        llm_type: str = 'lmstudio',
-        base_url: str = 'http://localhost:1234/v1',
-        model: str = 'local-model',
-        temperature: float = 0.3,
-        max_tokens: int = 2000,
-        timeout: int = 300,
+        config: LLMConfig,
         prompts_dir: Optional[str] = None
     ):
         """
         Initialize LLM service.
         
         Args:
-            llm_type: Type of LLM provider ('lmstudio')
-            base_url: LM Studio server endpoint
-            model: Model identifier
-            temperature: Sampling temperature
-            max_tokens: Maximum tokens to generate
-            timeout: Request timeout in seconds
+            config: LLMConfig instance with provider settings
             prompts_dir: Directory containing prompt files
         """
-        self.llm_type = llm_type
+        self.config = config
         self.prompts_dir = prompts_dir or os.path.join(
             Path(__file__).parent.parent, 'prompts'
         )
@@ -62,20 +52,17 @@ class LLMService:
         self.mark_expert_prompt = self.load_system_prompt('mark_expert_prompt.txt')
         self.classification_explainer_prompt = self.load_system_prompt('classification_explainer_prompt.txt')
         
-        # Initialize LLM manager
+        # Set starting prompt in config if not already set
+        if not config.starting_prompt:
+            config.starting_prompt = self.mark_expert_prompt
+        
+        # Initialize LLM manager using factory pattern
         try:
-            if llm_type == 'lmstudio':
-                self.llm_manager = LMStudioManager(
-                    base_url=base_url,
-                    model=model,
-                    starting_prompt=self.mark_expert_prompt,
-                    temperature=temperature,
-                    max_tokens=max_tokens,
-                    timeout=timeout
-                )
-                logger.info(f"LLM Service initialized with LM Studio: {base_url}")
-            else:
-                raise ValueError(f"Unsupported LLM type: {llm_type}")
+            self.llm_manager = LLMFactory.create_manager(config)
+            logger.info(
+                f"LLM Service initialized with {config.llm_type}: "
+                f"model={config.model}, temperature={config.temperature}"
+            )
             
             # Test connection
             if not self.llm_manager.test_connection():
@@ -141,7 +128,7 @@ class LLMService:
             return "Servizio LLM non disponibile. Verificare che LM Studio sia in esecuzione."
         
         try:
-            # Build context
+            # Build context - this will throw ValueError if no data found
             context = ContextBuilderService.build_full_context(
                 output_path, input_path
             )
@@ -190,6 +177,10 @@ Rispondi in italiano.
             logger.info(f"Generated explanation for {context['total_projects']} projects")
             return explanation
         
+        except ValueError as e:
+            # Validation error - no data found
+            logger.error(f"Validation error: {e}")
+            return str(e)
         except Exception as e:
             logger.error(f"Error generating explanation: {e}")
             return f"Errore nella generazione della spiegazione: {str(e)}"
@@ -229,7 +220,7 @@ Rispondi in italiano.
                 logger.info(f"Using existing session {session_id}")
             else:
                 session_id = str(uuid.uuid4())
-                # Build context for new session
+                # Build context for new session - will throw ValueError if no data
                 context = ContextBuilderService.build_full_context(output_path, input_path)
                 context_text = ContextBuilderService.format_context_for_llm(context)
                 
@@ -244,14 +235,19 @@ Rispondi in italiano.
                 logger.info(f"Created new session {session_id} with context for {context['total_projects']} projects")
             
             # Generate response with history
-            # Create a temporary manager with session history
-            temp_manager = LMStudioManager(
-                base_url=self.llm_manager.base_url,
-                model=self.llm_manager.model,
-                starting_prompt=self.mark_expert_prompt,
-                temperature=self.llm_manager.temperature,
-                max_tokens=self.llm_manager.max_tokens
+            # Create a temporary manager with session history using factory
+            # This preserves conversation context while allowing per-session customization
+            temp_config = LLMConfig(
+                llm_type=self.config.llm_type,
+                base_url=self.config.base_url,
+                model=self.config.model,
+                temperature=self.config.temperature,
+                max_tokens=self.config.max_tokens,
+                timeout=self.config.timeout,
+                api_key=self.config.api_key,
+                starting_prompt=self.mark_expert_prompt
             )
+            temp_manager = LLMFactory.create_manager(temp_config)
             
             # Build messages array with context included in system prompt
             # CRITICAL: Include analysis context in the system prompt so LLM always has it
@@ -274,8 +270,12 @@ Remember: Use EXACT project names from the context above. Never use placeholders
             
             temp_manager.messages = messages
             
-            # Generate response - question only, context is already in system prompt
-            answer = temp_manager.generate_response_history(question)
+            # Fix Issue 4: Include context reminder with the question to ensure LLM has fresh access to data
+            # This prevents the LLM from "forgetting" the context in longer conversations
+            question_with_context = f"{question}\n\n[Context Reminder: You have analysis data for {session['context']['total_projects']} projects. Refer to the CURRENT ANALYSIS CONTEXT in the system prompt.]"
+            
+            # Generate response with context-enhanced question
+            answer = temp_manager.generate_response_history(question_with_context)
             
             # Update session history
             session['history'].append({"role": "user", "content": question})
@@ -285,6 +285,14 @@ Remember: Use EXACT project names from the context above. Never use placeholders
             
             return answer, session_id, session['history']
         
+        except ValueError as e:
+            # Validation error - no data found
+            logger.error(f"Validation error: {e}")
+            return (
+                str(e),
+                session_id or str(uuid.uuid4()),
+                history or []
+            )
         except Exception as e:
             logger.error(f"Error answering question: {e}")
             return (
@@ -349,6 +357,10 @@ Rispondi in italiano in modo strutturato e conciso.
             logger.info(f"Generated summary for {context['total_projects']} projects")
             return summary
         
+        except ValueError as e:
+            # Validation error - no data found
+            logger.error(f"Validation error: {e}")
+            return str(e)
         except Exception as e:
             logger.error(f"Error generating summary: {e}")
             return f"Errore nella generazione del sommario: {str(e)}"
@@ -411,7 +423,10 @@ Rispondi in italiano in modo strutturato e conciso.
             Dictionary with service status information
         """
         status = {
-            'llm_type': self.llm_type,
+            'llm_type': self.config.llm_type,
+            'model': self.config.model,
+            'temperature': self.config.temperature,
+            'max_tokens': self.config.max_tokens,
             'available': self.is_available(),
             'active_sessions': len(self.sessions),
             'cache_size': len(self.cache)

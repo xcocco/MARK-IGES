@@ -63,16 +63,15 @@ def create_app(config_name=None):
     
     # Initialize LLM service
     try:
+        llm_config = config.get_llm_config()
         llm_service = LLMService(
-            llm_type=app.config['LLM_TYPE'],
-            base_url=app.config['LLM_BASE_URL'],
-            model=app.config['LLM_MODEL'],
-            temperature=app.config['LLM_TEMPERATURE'],
-            max_tokens=app.config['LLM_MAX_TOKENS'],
-            timeout=app.config['LLM_TIMEOUT'],
+            config=llm_config,
             prompts_dir=app.config['PROMPTS_DIR']
         )
-        app.logger.info('LLM Service initialized successfully')
+        app.logger.info(
+            f'LLM Service initialized successfully: '
+            f'type={llm_config.llm_type}, model={llm_config.model}'
+        )
     except Exception as e:
         app.logger.warning(f'LLM Service initialization failed: {e}')
         llm_service = None

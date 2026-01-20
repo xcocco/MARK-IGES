@@ -337,8 +337,13 @@ class LLMChat {
             emptyState.remove();
         }
         
-        // Append to container
-        this.messagesContainer.appendChild(messageDiv);
+        // Insert message before typing indicator (so typing indicator stays at bottom)
+        const typingIndicatorContainer = this.messagesContainer.querySelector('.llm-message.assistant:has(#typing-indicator)');
+        if (typingIndicatorContainer) {
+            this.messagesContainer.insertBefore(messageDiv, typingIndicatorContainer);
+        } else {
+            this.messagesContainer.appendChild(messageDiv);
+        }
         
         // Scroll to bottom
         this.scrollToBottom();
@@ -362,7 +367,13 @@ class LLMChat {
             </div>
         `;
         
-        this.messagesContainer.appendChild(messageDiv);
+        // Insert message before typing indicator (so typing indicator stays at bottom)
+        const typingIndicatorContainer = this.messagesContainer.querySelector('.llm-message.assistant:has(#typing-indicator)');
+        if (typingIndicatorContainer) {
+            this.messagesContainer.insertBefore(messageDiv, typingIndicatorContainer);
+        } else {
+            this.messagesContainer.appendChild(messageDiv);
+        }
         this.scrollToBottom();
     }
     
@@ -388,7 +399,13 @@ class LLMChat {
             <span>${message}</span>
         `;
         
-        this.messagesContainer.appendChild(alertDiv);
+        // Insert alert before typing indicator (so typing indicator stays at bottom)
+        const typingIndicatorContainer = this.messagesContainer.querySelector('.llm-message.assistant:has(#typing-indicator)');
+        if (typingIndicatorContainer) {
+            this.messagesContainer.insertBefore(alertDiv, typingIndicatorContainer);
+        } else {
+            this.messagesContainer.appendChild(alertDiv);
+        }
         this.scrollToBottom();
         
         // Auto-remove after 5 seconds

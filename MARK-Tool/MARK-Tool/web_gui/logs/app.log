@@ -5739,3 +5739,11 @@
 2025-12-24 18:13:40,365 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
 2025-12-24 18:24:43,942 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
 2025-12-24 18:24:43,957 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2026-01-20 16:05:55,232 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2026-01-20 16:05:55,248 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2026-01-20 16:49:41,536 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2026-01-20 16:49:41,555 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2026-01-20 17:11:01,983 - MARK-Tool.MARK-Tool.web_gui.app - WARNING - LLM Service initialization failed: Config.get_llm_config() missing 1 required positional argument: 'self'
+2026-01-20 17:11:01,993 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2026-01-20 17:13:39,440 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully: type=lmstudio, model=local-model
+2026-01-20 17:13:39,457 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)

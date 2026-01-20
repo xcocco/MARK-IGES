@@ -71,3 +71,23 @@ class TextGenerationManager(ABC):
             Generated response
         """
         pass
+    
+    @abstractmethod
+    def test_connection(self):
+        """
+        Test connection to the LLM provider.
+        
+        Returns:
+            True if connection successful, False otherwise
+        """
+        pass
+    
+    @abstractmethod
+    def get_model_info(self):
+        """
+        Get information about the current model.
+        
+        Returns:
+            Dictionary with model configuration and status
+        """
+        pass
