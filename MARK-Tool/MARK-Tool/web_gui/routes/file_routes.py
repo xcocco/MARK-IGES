@@ -4,7 +4,7 @@ File Routes - API endpoints for file operations
 from flask import Blueprint, request, jsonify, current_app, send_file
 from werkzeug.utils import secure_filename
 import os
-from ..services.file_service import FileService
+from services.file_service import FileService
 
 
 # Create blueprint

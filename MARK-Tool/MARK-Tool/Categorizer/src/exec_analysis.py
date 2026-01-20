@@ -14,12 +14,16 @@ class ExecAnalyzer:
 
     def run(self):
         import time
+        import shutil
         start_time = time.time()
         
         # Check input and output paths
         if not os.path.exists(self.input_path):
             print(f"Error: The input folder '{self.input_path}' does not exist.")
             exit(1)
+        
+        # Clean up old CSV files in output directory before analysis
+        self._cleanup_old_csvs(self.output_path)
         
         print(f"\n{'='*60}")
         print(f"Starting Analysis Process")
@@ -67,7 +71,81 @@ class ExecAnalyzer:
             rules_3=True,
             rules_4=True
         )
-
+        
+        # Copy final results to root of output_path for easy access
+        self._copy_final_results(output_folder_producers, output_folder_consumers, self.output_path)
+        
+        end_time = time.time()
+        print(f"\n{'='*60}")
+        print(f"Analysis Complete!")
+        print(f"Total time: {end_time - start_time:.2f} seconds")
+        print(f"Results saved to: {self.output_path}")
+        print(f"{'='*60}\n")
+    def _cleanup_old_csvs(self, output_path):
+        """Clean up old CSV files in the output directory before running new analysis"""
+        import glob
+        import shutil
+        
+        print(f"\n{'='*60}")
+        print("Cleaning up old analysis results...")
+        print(f"{'='*60}")
+        
+        # Patterns to match old CSV files
+        patterns = [
+            os.path.join(output_path, "*.csv"),
+            os.path.join(output_path, "Producers", "**", "*.csv"),
+            os.path.join(output_path, "Consumers", "**", "*.csv"),
+            os.path.join(output_path, "*_producer.csv"),
+            os.path.join(output_path, "*_consumer.csv")
+        ]
+        
+        removed_count = 0
+        for pattern in patterns:
+            for file_path in glob.glob(pattern, recursive=True):
+                try:
+                    os.remove(file_path)
+                    print(f"Removed old file: {file_path}")
+                    removed_count += 1
+                except Exception as e:
+                    print(f"Warning: Could not remove {file_path}: {e}")
+        
+        # Also clean up old directories
+        for dir_name in ["Producers", "Consumers"]:
+            dir_path = os.path.join(output_path, dir_name)
+            if os.path.exists(dir_path):
+                try:
+                    shutil.rmtree(dir_path)
+                    print(f"Removed old directory: {dir_path}")
+                except Exception as e:
+                    print(f"Warning: Could not remove directory {dir_path}: {e}")
+        
+        print(f"Cleanup complete: Removed {removed_count} old CSV files\n")
+    
+    def _copy_final_results(self, producer_folder, consumer_folder, output_path):
+        """Copy final CSV results to the root of output_path for easy access"""
+        import shutil
+        import glob
+        
+        print(f"\n{'='*60}")
+        print("Copying final results to output directory...")
+        print(f"{'='*60}")
+        
+        # Find and copy producer CSV
+        producer_csvs = glob.glob(os.path.join(producer_folder, "*.csv"))
+        for csv_file in producer_csvs:
+            dest = os.path.join(output_path, "producer.csv")
+            shutil.copy2(csv_file, dest)
+            print(f"Copied: {os.path.basename(csv_file)} -> {dest}")
+        
+        # Find and copy consumer CSV
+        consumer_csvs = glob.glob(os.path.join(consumer_folder, "*.csv"))
+        for csv_file in consumer_csvs:
+            dest = os.path.join(output_path, "consumer.csv")
+            shutil.copy2(csv_file, dest)
+            print(f"Copied: {os.path.basename(csv_file)} -> {dest}")
+        
+        print(f"Results copied successfully\n")
+    
     # Metodo per API web
     def run_async(self):
         """Esegue l’analisi in un thread in background"""

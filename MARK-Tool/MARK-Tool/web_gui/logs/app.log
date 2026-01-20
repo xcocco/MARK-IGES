@@ -5675,3 +5675,67 @@
 2025-12-02 17:01:55,351 - web_gui.app - INFO - MARK Analysis Tool API initialized (environment: testing)
 2025-12-02 17:13:01,495 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
 2025-12-02 17:14:53,236 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-17 14:28:28,574 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-17 14:28:28,593 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-17 14:30:30,252 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-17 14:30:30,275 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-23 16:36:46,391 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-23 16:36:46,405 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-23 17:34:27,803 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-23 17:34:27,815 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-23 17:38:01,722 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-23 17:38:01,767 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-23 17:38:56,623 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-23 17:38:56,650 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-23 17:40:25,847 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-23 17:40:25,891 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-23 17:55:16,116 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-23 17:55:16,149 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-23 18:02:55,835 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-23 18:02:55,853 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-23 18:10:05,083 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-23 18:10:05,118 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-23 18:12:19,950 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-23 18:12:19,976 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-23 18:15:46,210 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-23 18:15:46,235 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-23 18:21:13,870 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-23 18:21:13,892 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-23 18:26:56,467 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-23 18:26:56,493 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-23 18:32:49,099 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-23 18:32:49,120 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-23 18:42:34,315 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-23 18:42:34,352 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-23 18:51:48,980 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-23 18:51:49,001 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-23 19:01:24,773 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-23 19:01:24,794 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-23 19:19:04,717 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-23 19:19:04,737 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-23 19:20:36,124 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-23 19:20:36,147 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-23 19:25:27,669 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-23 19:25:27,686 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-23 19:37:01,733 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-23 19:37:01,751 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-23 19:50:54,667 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-23 19:50:54,703 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-23 19:59:34,130 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-23 19:59:34,153 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-24 11:40:43,818 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-24 11:40:43,838 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-24 11:52:13,228 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-24 11:52:13,250 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-24 11:59:09,701 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-24 11:59:09,723 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-24 12:12:31,501 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-24 12:12:31,518 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-24 12:18:00,864 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-24 12:18:00,887 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-24 18:09:04,301 - MARK-Tool.MARK-Tool.web_gui.app - WARNING - LLM Service initialization failed: LLMService.__init__() got an unexpected keyword argument 'timeout'
+2025-12-24 18:09:04,314 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-24 18:13:40,330 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-24 18:13:40,365 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)
+2025-12-24 18:24:43,942 - MARK-Tool.MARK-Tool.web_gui.app - INFO - LLM Service initialized successfully
+2025-12-24 18:24:43,957 - MARK-Tool.MARK-Tool.web_gui.app - INFO - MARK Analysis Tool API initialized (environment: development)

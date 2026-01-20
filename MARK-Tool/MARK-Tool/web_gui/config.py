@@ -51,6 +51,7 @@ class Config:
     LLM_API_KEY = os.environ.get('LLM_API_KEY', 'not-needed')
     LLM_MAX_TOKENS = int(os.environ.get('LLM_MAX_TOKENS', '2000'))
     LLM_TEMPERATURE = float(os.environ.get('LLM_TEMPERATURE', '0.3'))
+    LLM_TIMEOUT = int(os.environ.get('LLM_TIMEOUT', '300'))  # 5 minutes default
     
     # Prompts paths
     PROMPTS_DIR = os.path.join(BASE_DIR, 'prompts')

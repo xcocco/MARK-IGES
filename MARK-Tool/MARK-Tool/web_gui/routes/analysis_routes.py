@@ -2,7 +2,7 @@
 Analysis Routes - API endpoints for analysis operations
 """
 from flask import Blueprint, request, jsonify, current_app
-from ..services.analysis_service import AnalysisService
+from services.analysis_service import AnalysisService
 
 
 # Create blueprint

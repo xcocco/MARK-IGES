@@ -7,7 +7,7 @@ import subprocess
 import threading
 import time
 import uuid
-from typing import Optional, Dict, Tuple
+from typing import Optional, Dict, Tuple, Callable
 from datetime import datetime
 
 
@@ -61,6 +61,9 @@ class AnalysisService:
         self.cloner_path = cloner_path
         self.jobs: Dict[str, AnalysisJob] = {}
         self.lock = threading.Lock()
+        
+        # Callback for when analysis completes
+        self.on_analysis_complete: Optional[Callable[[str, str, str], None]] = None
     
     def create_job(self, input_path: str, output_path: str, github_csv: Optional[str] = None) -> str:
         """
@@ -179,6 +182,14 @@ class AnalysisService:
             # Job completed successfully
             self._update_job(job_id, status='completed', progress=100,
                            message='Analysis completed successfully')
+            
+            # Trigger post-analysis callback (e.g., send to LLM)
+            if self.on_analysis_complete:
+                try:
+                    self.on_analysis_complete(job_id, job.input_path, job.output_path)
+                except Exception as callback_error:
+                    # Don't fail the job if callback fails
+                    print(f"Post-analysis callback error: {callback_error}")
             
         except Exception as e:
             self._update_job(job_id, status='failed', 

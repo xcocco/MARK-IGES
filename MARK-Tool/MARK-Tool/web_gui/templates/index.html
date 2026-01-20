@@ -12,12 +12,14 @@
         <link rel="stylesheet" type="text/css" href="../static/css/tabs.css" />
         <link rel="stylesheet" type="text/css" href="../static/css/loading-popup-style.css" />
         <link rel="stylesheet" type="text/css" href="../static/css/dashboard.css" />
+        <link rel="stylesheet" type="text/css" href="../static/css/llm_chat.css" />
         <script type="module" src="../static/js/analysis_main.js"></script>
         <script type="module" src="../static/js/file_requests.js"></script>
         <script type="module" src="../static/js/analysis_requests.js"></script>
         <script type="module" src="../static/js/loading-dialog-script.js"></script>
         <script type="module" src="../static/js/csv_file.js"></script>
         <script type="module" src="../static/js/tabs.js"></script>
+        <script src="../static/js/llm_chat.js"></script>
     </head>
     <body>
         <h1 class="text-center my-4">MARK Tool Analysis</h1>
@@ -31,6 +33,9 @@
                 </li>
                 <li class="tab" data-tab="Analytics">
                     Analytics
+                </li>
+                <li class="tab" data-tab="LLM Assistant">
+                    LLM Assistant
                 </li>
             </ul>
             <div class="tab-window">
@@ -248,6 +253,127 @@
                         <div class="alert alert-info">
                             <i class="bi bi-info-circle me-2"></i>
                             <strong>Last Analysis:</strong> <span id="last-analysis">Not available</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LLM Assistant Tab Content -->
+                <div data-tab="LLM Assistant" id="llm-wrapper" class="fade-in-up">
+                    <div class="llm-container">
+                        <!-- Header -->
+                        <div class="llm-header">
+                            <h2><i class="bi bi-robot me-2"></i>LLM Assistant</h2>
+                            <p>Ask questions about your analyzed ML project</p>
+                        </div>
+                        
+                        <!-- Status Bar -->
+                        <div class="llm-status">
+                            <div class="status-indicator">
+                                <span class="status-dot" id="llm-status-dot"></span>
+                                <span id="llm-status-text">Checking connection...</span>
+                            </div>
+                            
+                            <div class="llm-actions">
+                                <button class="btn-llm btn-llm-clear" id="clear-history">
+                                    <i class="bi bi-trash"></i> Clear History
+                                </button>
+                                <button class="btn-llm btn-llm-explain" id="auto-explain">
+                                    <i class="bi bi-lightbulb"></i> Auto Explain
+                                </button>
+                                <button class="btn-llm btn-llm-summary" id="auto-summary">
+                                    <i class="bi bi-file-text"></i> Summary
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Messages Area -->
+                        <div class="llm-messages" id="llm-messages">
+                            <!-- Empty State -->
+                            <div class="llm-empty-state">
+                                <i class="bi bi-chat-dots"></i>
+                                <h3>Welcome to LLM Assistant</h3>
+                                <p>I can help you understand your MARK analysis results. Start by asking a question or try one of these:</p>
+                                
+                                <div class="llm-suggestions">
+                                    <div class="suggestion-card" data-question="Why is this project classified as a Producer?">
+                                        <i class="bi bi-question-circle-fill"></i>
+                                        <strong>Classification</strong>
+                                        <small>Understand the classification reasoning</small>
+                                    </div>
+                                    
+                                    <div class="suggestion-card" data-question="What ML libraries are being used?">
+                                        <i class="bi bi-stack"></i>
+                                        <strong>Libraries</strong>
+                                        <small>Learn about detected ML libraries</small>
+                                    </div>
+                                    
+                                    <div class="suggestion-card" data-question="What is the application domain of this project?">
+                                        <i class="bi bi-globe"></i>
+                                        <strong>Domain</strong>
+                                        <small>Infer the project's purpose</small>
+                                    </div>
+                                    
+                                    <div class="suggestion-card" data-question="What keywords were detected and what do they mean?">
+                                        <i class="bi bi-tags"></i>
+                                        <strong>Keywords</strong>
+                                        <small>Explore detected API keywords</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Typing Indicator -->
+                            <div class="llm-message assistant">
+                                <div class="message-avatar assistant-avatar">
+                                    <i class="bi bi-robot"></i>
+                                </div>
+                                <div class="typing-indicator" id="typing-indicator">
+                                    <div class="typing-dots">
+                                        <span class="typing-dot"></span>
+                                        <span class="typing-dot"></span>
+                                        <span class="typing-dot"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Input Area -->
+                        <div class="llm-input-area">
+                            <div class="llm-input-container">
+                                <div class="llm-input-wrapper">
+                                    <textarea 
+                                        id="llm-input" 
+                                        placeholder="Ask me anything about the analyzed project..."
+                                        rows="1"
+                                    ></textarea>
+                                    <div class="llm-input-hint">
+                                        Press Enter to send, Shift+Enter for new line
+                                    </div>
+                                </div>
+                                <button id="send-message">
+                                    <i class="bi bi-send-fill"></i>
+                                    Send
+                                </button>
+                            </div>
+                            
+                            <!-- Quick Actions -->
+                            <div class="llm-quick-actions">
+                                <button class="quick-action-btn" data-question="Explain the classification in simple terms">
+                                    <i class="bi bi-chat-square-quote"></i>
+                                    Simple explanation
+                                </button>
+                                <button class="quick-action-btn" data-question="What are the main training APIs used?">
+                                    <i class="bi bi-code-square"></i>
+                                    Training APIs
+                                </button>
+                                <button class="quick-action-btn" data-question="Are there any potential issues?">
+                                    <i class="bi bi-exclamation-triangle"></i>
+                                    Issues
+                                </button>
+                                <button class="quick-action-btn" data-question="What type of model is being trained or used?">
+                                    <i class="bi bi-cpu"></i>
+                                    Model type
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

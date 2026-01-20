@@ -69,6 +69,7 @@ def create_app(config_name=None):
             model=app.config['LLM_MODEL'],
             temperature=app.config['LLM_TEMPERATURE'],
             max_tokens=app.config['LLM_MAX_TOKENS'],
+            timeout=app.config['LLM_TIMEOUT'],
             prompts_dir=app.config['PROMPTS_DIR']
         )
         app.logger.info('LLM Service initialized successfully')

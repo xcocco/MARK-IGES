@@ -2,7 +2,7 @@
 Analytics Routes - API endpoints for analytics and dashboard data
 """
 from flask import Blueprint, request, jsonify, current_app
-from ..services.analytics_service import AnalyticsService
+from services.analytics_service import AnalyticsService
 
 
 # Create blueprint

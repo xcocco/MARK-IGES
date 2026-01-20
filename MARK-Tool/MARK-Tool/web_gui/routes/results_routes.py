@@ -3,7 +3,7 @@ Results Routes - API endpoints for viewing analysis results
 """
 from flask import Blueprint, request, jsonify, current_app
 import os
-from ..services.file_service import FileService
+from services.file_service import FileService
 
 
 # Create blueprint

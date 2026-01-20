@@ -38,6 +38,7 @@ class LLMService:
         model: str = 'local-model',
         temperature: float = 0.3,
         max_tokens: int = 2000,
+        timeout: int = 300,
         prompts_dir: Optional[str] = None
     ):
         """
@@ -49,6 +50,7 @@ class LLMService:
             model: Model identifier
             temperature: Sampling temperature
             max_tokens: Maximum tokens to generate
+            timeout: Request timeout in seconds
             prompts_dir: Directory containing prompt files
         """
         self.llm_type = llm_type
@@ -68,7 +70,8 @@ class LLMService:
                     model=model,
                     starting_prompt=self.mark_expert_prompt,
                     temperature=temperature,
-                    max_tokens=max_tokens
+                    max_tokens=max_tokens,
+                    timeout=timeout
                 )
                 logger.info(f"LLM Service initialized with LM Studio: {base_url}")
             else:
@@ -124,12 +127,12 @@ class LLMService:
         project_name: Optional[str] = None
     ) -> str:
         """
-        Generate automatic explanation for project classification.
+        Generate automatic explanation for projects classification.
         
         Args:
-            input_path: Path to analyzed project
+            input_path: Path to analyzed projects directory
             output_path: Path to analysis results
-            project_name: Optional project name
+            project_name: Optional project name (for filtering)
             
         Returns:
             Explanation text
@@ -140,40 +143,51 @@ class LLMService:
         try:
             # Build context
             context = ContextBuilderService.build_full_context(
-                input_path, output_path, project_name
+                output_path, input_path
             )
             
             # Format context for LLM
             context_text = ContextBuilderService.format_context_for_llm(context)
             
             # Check cache
-            cache_key = f"explain_{context['project_name']}_{context['analysis_results']['classification']}"
+            cache_key = f"explain_{context['total_projects']}_{context['producer_count']}_{context['consumer_count']}"
             if cache_key in self.cache:
-                logger.info(f"Using cached explanation for {context['project_name']}")
+                logger.info(f"Using cached explanation for analysis")
                 return self.cache[cache_key]
             
-            # Generate explanation
-            prompt = f"""Analizza i risultati MARK per questo progetto e fornisci una spiegazione chiara della classificazione.
+            # Build enhanced prompt with context embedded
+            system_prompt_with_context = f"""{self.classification_explainer_prompt}
+
+## CURRENT ANALYSIS CONTEXT
 
 {context_text}
 
+---
+Remember: Use EXACT project names from the context above!
+"""
+            
+            # Generate explanation
+            prompt = f"""Analizza i risultati MARK e fornisci una spiegazione chiara delle classificazioni.
+
 Fornisci una spiegazione strutturata che includa:
-1. Classificazione e sua motivazione
-2. Evidenze specifiche (keywords, file, righe)
-3. Librerie ML utilizzate e loro scopo
-4. Possibile dominio applicativo (se inferibile)
-5. Livello di confidenza nella classificazione
+1. Panoramica generale (numero di progetti, distribuzione delle classificazioni)
+2. Per ciascun progetto: classificazione e motivazione
+3. Evidenze specifiche (keywords, file, librerie)
+4. Possibili domini applicativi (se inferibili)
+5. Livello di confidenza nelle classificazioni
+
+Rispondi in italiano.
 """
             
             explanation = self.llm_manager.generate_response(
                 prompt,
-                starting_prompt=self.classification_explainer_prompt
+                starting_prompt=system_prompt_with_context
             )
             
             # Cache result
             self.cache[cache_key] = explanation
             
-            logger.info(f"Generated explanation for {context['project_name']}")
+            logger.info(f"Generated explanation for {context['total_projects']} projects")
             return explanation
         
         except Exception as e:
@@ -189,11 +203,11 @@ Fornisci una spiegazione strutturata che includa:
         history: Optional[List[Dict]] = None
     ) -> Tuple[str, str, List[Dict]]:
         """
-        Answer user question about analyzed project.
+        Answer user question about analyzed projects.
         
         Args:
             question: User's question
-            input_path: Path to analyzed project
+            input_path: Path to analyzed projects directory
             output_path: Path to analysis results
             session_id: Optional session ID for conversation continuity
             history: Optional conversation history
@@ -212,10 +226,11 @@ Fornisci una spiegazione strutturata che includa:
             # Get or create session
             if session_id and session_id in self.sessions:
                 session = self.sessions[session_id]
+                logger.info(f"Using existing session {session_id}")
             else:
                 session_id = str(uuid.uuid4())
                 # Build context for new session
-                context = ContextBuilderService.build_full_context(input_path, output_path)
+                context = ContextBuilderService.build_full_context(output_path, input_path)
                 context_text = ContextBuilderService.format_context_for_llm(context)
                 
                 session = {
@@ -226,19 +241,7 @@ Fornisci una spiegazione strutturata che includa:
                     'history': history or []
                 }
                 self.sessions[session_id] = session
-            
-            # Prepare message with context
-            if not session['history']:
-                # First message - include full context
-                full_question = f"""Contesto del progetto analizzato:
-
-{session['context_text']}
-
-Domanda dell'utente: {question}
-"""
-            else:
-                # Follow-up question - context already provided
-                full_question = question
+                logger.info(f"Created new session {session_id} with context for {context['total_projects']} projects")
             
             # Generate response with history
             # Create a temporary manager with session history
@@ -250,14 +253,29 @@ Domanda dell'utente: {question}
                 max_tokens=self.llm_manager.max_tokens
             )
             
-            # Load history into manager
-            if session['history']:
-                temp_manager.messages = [
-                    {"role": "system", "content": self.mark_expert_prompt}
-                ] + session['history']
+            # Build messages array with context included in system prompt
+            # CRITICAL: Include analysis context in the system prompt so LLM always has it
+            system_prompt_with_context = f"""{self.mark_expert_prompt}
+
+## CURRENT ANALYSIS CONTEXT
+
+{session['context_text']}
+
+---
+Remember: Use EXACT project names from the context above. Never use placeholders!
+"""
             
-            # Generate response
-            answer = temp_manager.generate_response_history(full_question)
+            # Initialize messages with enhanced system prompt
+            messages = [{"role": "system", "content": system_prompt_with_context}]
+            
+            # Add conversation history
+            if session['history']:
+                messages.extend(session['history'])
+            
+            temp_manager.messages = messages
+            
+            # Generate response - question only, context is already in system prompt
+            answer = temp_manager.generate_response_history(question)
             
             # Update session history
             session['history'].append({"role": "user", "content": question})
@@ -282,12 +300,12 @@ Domanda dell'utente: {question}
         project_name: Optional[str] = None
     ) -> str:
         """
-        Generate a concise summary of the analyzed project.
+        Generate a concise summary of the analyzed projects.
         
         Args:
-            input_path: Path to analyzed project
+            input_path: Path to analyzed projects directory
             output_path: Path to analysis results
-            project_name: Optional project name
+            project_name: Optional project name (for filtering)
             
         Returns:
             Summary text
@@ -297,20 +315,38 @@ Domanda dell'utente: {question}
         
         try:
             context = ContextBuilderService.build_full_context(
-                input_path, output_path, project_name
+                output_path, input_path
             )
             context_text = ContextBuilderService.format_context_for_llm(context)
             
-            prompt = f"""Fornisci un sommario conciso (3-5 punti chiave) di questo progetto ML:
+            # Build enhanced prompt with context embedded
+            system_prompt_with_context = f"""{self.mark_expert_prompt}
+
+## CURRENT ANALYSIS CONTEXT
 
 {context_text}
 
-Includi: classificazione, librerie principali, possibile dominio applicativo.
+---
+Remember: Use EXACT project names from the context above!
 """
             
-            summary = self.llm_manager.generate_response(prompt)
+            prompt = f"""Fornisci un sommario conciso (3-5 punti chiave) dell'analisi MARK:
+
+Includi: 
+- Numero totale di progetti analizzati
+- Distribuzione delle classificazioni (Producer/Consumer/Hybrid)
+- Librerie ML principali rilevate
+- Possibili domini applicativi
+
+Rispondi in italiano in modo strutturato e conciso.
+"""
             
-            logger.info(f"Generated summary for {context.get('project_name')}")
+            summary = self.llm_manager.generate_response(
+                prompt,
+                starting_prompt=system_prompt_with_context
+            )
+            
+            logger.info(f"Generated summary for {context['total_projects']} projects")
             return summary
         
         except Exception as e:
@@ -356,7 +392,7 @@ Includi: classificazione, librerie principali, possibile dominio applicativo.
             {
                 'session_id': sid,
                 'created_at': session['created_at'].isoformat(),
-                'project_name': session['context']['project_name'],
+                'total_projects': session['context']['total_projects'],
                 'message_count': len(session['history'])
             }
             for sid, session in self.sessions.items()

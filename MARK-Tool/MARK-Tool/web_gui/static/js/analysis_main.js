@@ -111,6 +111,7 @@ async function getCsvView(filepath) {
 }
 
 async function getResults() {
+    let input_path = document.getElementById('input_field').value
     let output_path = document.getElementById('output_field').value
     LoadingDialog.hideActionButton()
     LoadingDialog.removeAllCustomActions()
@@ -119,7 +120,8 @@ async function getResults() {
         let resultsList = await ResultsRequests.requestList(output_path)
         console.log(resultsList)
         if (resultsList.success === true) {
-            // Store output path in session storage for analytics dashboard
+            // Store paths in session storage for analytics dashboard and LLM assistant
+            sessionStorage.setItem('lastInputPath', input_path)
             sessionStorage.setItem('lastOutputPath', output_path)
             LoadingDialog.hideLoadingPopup()
             document.getElementById('output-tab').click()

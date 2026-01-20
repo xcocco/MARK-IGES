@@ -24,7 +24,8 @@ class LMStudioManager(TextGenerationManager):
         model="local-model", 
         starting_prompt="",
         temperature=0.3,
-        max_tokens=2000
+        max_tokens=2000,
+        timeout=300
     ):
         """
         Initialize LM Studio manager.
@@ -35,12 +36,14 @@ class LMStudioManager(TextGenerationManager):
             starting_prompt: System prompt for the conversation
             temperature: Sampling temperature (0.0-1.0)
             max_tokens: Maximum tokens to generate
+            timeout: Request timeout in seconds (default: 300)
         """
         super().__init__(model, starting_prompt)
         
         self.base_url = base_url.rstrip('/')
         self.temperature = temperature
         self.max_tokens = max_tokens
+        self.timeout = timeout
         self.endpoint = f"{self.base_url}/chat/completions"
         
         logger.info(f"LM Studio manager initialized: {self.endpoint}")
@@ -67,7 +70,7 @@ class LMStudioManager(TextGenerationManager):
                 self.endpoint,
                 json=payload,
                 headers={"Content-Type": "application/json"},
-                timeout=60
+                timeout=self.timeout
             )
             response.raise_for_status()
             
@@ -126,14 +129,26 @@ class LMStudioManager(TextGenerationManager):
     
     def test_connection(self):
         """
-        Test connection to LM Studio server.
+        Test connection to LM Studio server using /models endpoint.
         
         Returns:
             True if connection successful, False otherwise
         """
         try:
-            response = self.generate_response("Hello", "You are a helpful assistant.")
-            return bool(response and not response.startswith("Error") and not response.startswith("Mi dispiace"))
+            # Use the /models endpoint for a lightweight health check
+            models_endpoint = f"{self.base_url}/models"
+            response = requests.get(models_endpoint, timeout=5)
+            response.raise_for_status()
+            
+            # Check if response contains model data
+            data = response.json()
+            if 'data' in data or 'models' in data:
+                logger.info("LM Studio connection test successful")
+                return True
+            else:
+                logger.warning(f"Unexpected response from LM Studio: {data}")
+                return False
+                
         except Exception as e:
             logger.error(f"LM Studio connection test failed: {e}")
             return False
